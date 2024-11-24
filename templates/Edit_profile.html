@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load static %}
+    <title>Edit Profile</title>
+    <link rel="icon" type="image/png" href="{% static 'logo3.png' %}">
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Nunito:600,700" rel="stylesheet"> 
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <!-- jQuery Script link -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+        font-family: 'Nunito', sans-serif;
+        }
+    
+        p {
+            font-size: 16px;
+        }
+        nav {
+            background-color: rgb(52, 8, 5);
+            position: -webkit-sticky;
+            position: sticky;
+            z-index: 9999;
+            top: 0;
+        }
+        .nav-item:hover {
+            position: relative;
+            transform: scale(1.1);
+            transition: 0.6s;
+        }
+        #button {
+            background-color: rgb(52, 8, 5);
+            color: white;
+        }
+        #name {
+            font-size: 16px;
+            margin-bottom: 1%;
+        }
+        .submit-button{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 2%;
+            margin-bottom: 2%;
+        }
+        .view-button{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 2%;
+            margin-bottom: 2%;
+        }
+        #visibility-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+        .error {
+            color: red;
+            font-size: 0.9em;
+        }
+        select {
+            padding: 2%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+        }
+        label#course{
+            margin-bottom: 2%;
+            margin-top: 1%;
+        }
+        .card{
+            background-color: #F5F5DC;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!--nav bar start -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="{% static 'logo3.png'%}" alt="" width="50" height="50" class="d-inline-block align-text-center">
+                <strong style="text-wrap: balance;">RCC Institute of Information Technology</strong></a>
+                <a href="/" class="register-btn"><button type="button" class="btn btn-outline-light">Go to Home</button></a>
+        </div>
+    </nav>
+    <br>
+    <h3 style="text-align: center;"><b>Edit Profile</b></h3>
+    <div class="container">
+    <form action="/update_profile/" method="post" id="form">
+        {% csrf_token %}
+        <div class="row d-flex justify-content-center">
+            <!--Card Personal Details-->
+            <div class="col d-flex justify-content-center">
+                <div class="card mt-3 border-3" style="width: 22rem;">
+                    <div class="card-body">
+                        <h5>Personal Details:</h5>
+                        <hr style="margin-top: 0%">
+                        <!--form start -->
+                        <p id="name">Full Name</p>
+                        <div class="input-group mb-1 mt-1">
+                            <input type="text" value="{{obj.name}}" class="form-control" aria-label="Recipient's username"
+                                aria-describedby="basic-addon2" readonly >
+                        </div>
+                        <div class="row">
+                            <label id="course" for="dob">Date of Birth:</label>
+                            <input type="text" value="{{obj.dob}}" id="dob" name="dob" style="margin: auto;width: 92%;" readonly>
+                            <div id="dobError" class="error"></div><br>
+                        </div>
+                        <p id="name">Mobile Number</p>
+                        <div class="input-group mb-1 mt-0">
+                            <input type="text" value="{{obj.phno}}" class="form-control" aria-label="Recipient's username"
+                                name="phno" aria-describedby="basic-addon2" id="phNo" minlength="10" maxlength="10" required>
+                        </div>
+                        <p id="name">Email</p>
+                        <div class="input-group mb-1 mt-1">
+                            <input type="text" value="{{obj.email}}" class="form-control" value="{{email}}" aria-label="Recipient's username"
+                                aria-describedby="basic-addon2" readonly>
+                        </div>
+                        
+                        <p id="name">Password
+                            <!-- Popover Modal-->
+                                <i class="bi bi-info-circle-fill" data-bs-toggle="modal" data-bs-target="#staticBackdrop"></i>
+                        </p>
+  
+                    <!-- Modal -->
+                    <div class="modal fade" id="staticBackdrop" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Password Policy</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <ul>
+                                        <li>Password must be at least 8 characters long.</li>
+                                        <li>Password must contain at least one uppercase letter.</li>
+                                        <li>Password must contain at least one lowercase letter.</li>
+                                        <li>Password must contain at least one number.</li>
+                                        <li>Password must contain at least one special character.</li>
+                                    </ul> 
+                                </div>
+                                <div class="modal-footer">
+                                <button type="button" id="button" class="btn" data-bs-dismiss="modal">Okay</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        
+                        <div class="input-group mb-1 mt-1">
+                            <input type="password" value="{{obj.password}}" class="form-control" aria-label="Recipient's username" id="password"
+                                aria-describedby="basic-addon2" readonly onchange="checkPassword()">
+                                <button id="visibility-toggle">
+                                    <i class="bi bi-eye"></i>  
+                                </button>
+                        </div>
+                        <p id="error" style="color: red; font-size: 14px;"></p>
+                        
+                        <p id="name">Address</p>
+                        <div class="input-group mb-1 mt-1">
+                            <input type="text" value="{{obj.address}}" class="form-control" aria-label="Recipient's username"
+                                name="address" aria-describedby="basic-addon2" required>
+                        </div>
+                        <br>
+                    </div> 
+                </div>   
+            </div>
+            <!--Card Highest Qualification Details-->
+            <div class="col d-flex justify-content-center">
+                <div class="card mt-3 border-3" style="width: 22rem;">
+                    <div class="card-body">
+                        <h5 style="margin-top: 0%;">Educational Qualifications:</h5>
+                        <hr style="margin-top: 0%">
+                        
+                            <p id="name">Highest Qualification from RCCIIT</p>
+                            <div class="input-group mb-1 mt-0">
+                                <input type="text" value="{{obj.qualification}}" class="form-control" aria-label="Recipient's username"
+                                aria-describedby="basic-addon2" minlength="2" maxlength="5" readonly>
+                            </div>
+                            <br>
+
+                            <p id="name">Course Name</p>
+                            <div class="input-group mb-1 mt-0">
+                                <input type="text" value="{{obj.course}}" class="form-control" aria-label="Recipient's username"
+                                aria-describedby="basic-addon2" minlength="2" maxlength="5" readonly>
+                            </div>
+                            <br>
+
+                            <p id="name">Year of Passing</p>
+                            <div class="input-group mb-1 mt-0">
+                                <input type="text" id="year_of_passing" name="year_of_passing" value="{{obj.year_of_passing}}" class="form-control" aria-label="Recipient's username"
+                                aria-describedby="basic-addon2" minlength="2" maxlength="5" readonly>
+                            </div>
+                            <br>
+                            
+                            <p id="name">Percentage of Obtained Marks</p>
+                            <div class="input-group mb-1 mt-0">
+                                <input type="text" value="{{obj.percentage}}" class="form-control" aria-label="Recipient's username"
+                                aria-describedby="basic-addon2" minlength="2" maxlength="5" readonly>
+                            </div>
+                            <br>
+
+                            <div class="view-button">
+                                <a href="{{obj.certificate.url}}" target="_blank"><button type="button" class="btn" id="button"><i class="bi bi-eye"></i> View Certificate</button></a>
+                            </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+            <!--Card Work Experience Details-->
+            <div class="col d-flex justify-content-center">
+                <div class="card mt-3 border-3" style="width: 22rem;">
+                    <div class="card-body">
+                        <h5 style="margin-top: 0%;">Work Experience:</h5>
+                        <hr style="margin-top: 0%">
+                        <!--form start -->
+                        <p id="name"> Organization</p>
+                        <div class="input-group mb-1 mt-1">
+                            <input type="text" name="organization_name" value="{{obj.organization_name}}" class="form-control" aria-label="Recipient's username"
+                                aria-describedby="basic-addon2" required>
+                        </div>
+                        <div class="row">
+                            <label for="doj_month">Date of Joining:</label>
+                            <select id="doj_month" name="doj_month" class="date-select" style="margin: auto;width: 45%;">
+                                <option value="">{{obj.doj_month}}</option>
+                            </select>&nbsp;
+                            <select id="doj_year" name="doj_year" class="date-select" style="margin: auto; width: 41%;">
+                                <option value="">{{obj.doj_year}}</option>
+                            </select>
+                            <div id="dojError" class="error"></div><br>
+                        </div>
+                        <p id="name">Job Profile</p>
+                        <div class="input-group mb-1 mt-1">
+                            <input type="text" name="job_profile" value="{{obj.job_profile}}" class="form-control" aria-label="Recipient's username"
+                                aria-describedby="basic-addon2" required>
+                        </div>
+                        <p id="name">Job Location</p>
+                        <div class="input-group mb-1 mt-1">
+                            <input type="text" name="job_location" value="{{obj.job_location}}" class="form-control" aria-label="Recipient's username"
+                            aria-describedby="basic-addon2" required>
+                        </div>
+                        <p id="name">Linked In URL</p>
+                        <div class="input-group mb-1 mt-1">
+                            <input type="url" name="linked_in_url" value="{{obj.linked_in_url}}" class="form-control" aria-label="Recipient's username"
+                            aria-describedby="basic-addon2">
+                        </div>
+                    </div>
+                </div>    
+            </div>
+        </div>  
+    </div>
+    <div class="submit-button">
+        <button type="submit" class="btn" id="button"><i class="bi bi-bookmark-check"></i> Save Changes</button>
+    </div>
+    </form> 
+    
+    <!--Footer-->
+    <footer class="footer mt-auto py-3 bg-light">
+        <div class="container-fl text-center">
+            <span class="text">&copy; 2024 by RCC Institute of Information Technology | All Rights Reserved.</span>
+        </div>
+    </footer>
+
+    <script>
+        $(document).ready(function() {
+            var today = new Date();
+            var currentYear = today.getFullYear();
+            var collegeEstablishedYear = 1990;
+    
+            var minAgeDate = new Date(today.setFullYear(today.getFullYear() - 17));
+            var maxDOB = minAgeDate.toISOString().split('T')[0];
+            $('#dob').attr('max', maxDOB);
+    
+            function populateMonths() {
+                for (var month = 1; month <= 12; month++) {
+                    $('#doj_month').append(`<option value="${month}">${String(month).padStart(2, '0')}</option>`);
+                }
+            }
+    
+            function populateYears() {
+                for (var year = collegeEstablishedYear; year <= currentYear; year++) {
+                    $('#doj_year').append(`<option value="${year}">${year}</option>`);
+                }
+            }
+    
+            /*function populateYearOfPassing(minYear) {
+                $('#year_of_passing').empty().append('<option value="">Year</option>');
+                for (var year = Math.max(minYear, collegeEstablishedYear); year <= currentYear; year++) {
+                    $('#year_of_passing').append(`<option value="${year}">${year}</option>`);
+                }
+            }*/
+    
+            populateMonths();
+            populateYears();
+            //populateYearOfPassing(collegeEstablishedYear);
+    
+            // Enable or disable readonly depending on user interaction
+            $('.editable').on('focus', function() {
+                $(this).removeAttr('readonly');
+            }).on('blur', function() {
+                if (!$(this).val()) {
+                    $(this).attr('readonly', true);
+                }
+            });
+    
+            $('#dob, #mobile, #address, #organization, #linkedin_url, #job_profile, #job_location').attr('readonly', true); // Initially readonly
+    
+            $('#doj_month, #doj_year').on('change', function() {
+                validateFields();
+            });
+    
+            /*$('#year_of_passing').on('change', function() {
+                validateFields();
+            });*/
+    
+            function validateFields() {
+                var dob = new Date($('#dob').val());
+                var dojMonth = parseInt($('#doj_month').val());
+                var dojYear = parseInt($('#doj_year').val());
+                var yop = parseInt($('#year_of_passing').val());
+                var dobyear = dob.getFullYear();
+    
+                $('#dobError').text('');
+                $('#yopError').text('');
+                $('#dojError').text('');
+    
+                if (new Date(dojYear, dojMonth - 1) <= dob) {
+                    $('#dojError').text('Date of Joining must be greater than Date of Birth.');
+                }
+    
+                if (dobyear > yop) {
+                    $('#yopError').text('Year of passing must be greater than Date of Birth.');
+                } else {
+                    if (yop - dobyear <= 20) {
+                        $('#yopError').text('Minimum age should be 21 to graduate.');
+                    }
+                }
+    
+                if (yop>dojYear) {
+                    $('#dojError').text('Year of Passing must be lesser than the Year of Joining.');
+                }
+            }
+    
+            $('#form').on('submit', function(e) {
+                var hasErrors = false;
+    
+                // Only require validation for fields that are editable (and not readonly)
+                if (!$('#dob').prop('readonly') && !$('#dob').val()) {
+                    alert('Please provide Date of Birth.');
+                    e.preventDefault();
+                    return;
+                }
+    
+                validateFields();
+    
+                if ($('.error').text().length > 0) {
+                    hasErrors = true;
+                }
+    
+                if (hasErrors) {
+                    e.preventDefault(); 
+                }
+            });
+    
+            // Function for password visibility
+            const password = document.getElementById('password');
+            const visibilityToggle = document.getElementById('visibility-toggle');
+    
+            visibilityToggle.addEventListener('click', () => {
+                if (password.type === 'password') {
+                    password.type = 'text';
+                    visibilityToggle.innerHTML = '<i class="bi bi-eye-slash"></i>'; // Change to your eye-slash icon class
+                } else {
+                    password.type = 'password';
+                    visibilityToggle.innerHTML = '<i class="bi bi-eye"></i>'; // Change to your eye icon class
+                }
+            });
+    
+            // Function for phone number validation
+            const numberInput = document.getElementById('phNo');
+            numberInput.addEventListener('keydown', (event) => {
+                // Allow only numbers, backspace, and delete
+                if (!/[0-9]|\d|Backspace|Delete/.test(event.key)) {
+                    event.preventDefault();
+                }
+            });
+    
+            // Function for password policy validation
+            function validatePassword(password) {
+                const uppercaseRegex = /^(?=.*[A-Z])/;
+                const lowercaseRegex = /^(?=.*[a-z])/;
+                const numberRegex = /^(?=.*\d)/;
+                const specialCharRegex = /^(?=.*[!@#$%^&*])/;
+    
+                if (password.length < 8) {
+                    return "Password must be at least 8 characters long.";
+                }
+    
+                if (!uppercaseRegex.test(password)) {
+                    return "Password must contain at least one uppercase letter.";
+                }
+                if (!lowercaseRegex.test(password)) {
+                    return "Password must contain at least one lowercase letter.";
+                }
+                if (!numberRegex.test(password)) {
+                    return "Password must contain at least one number.";
+                }
+                if (!specialCharRegex.test(password)) {
+                    return "Password must contain at least one special character (!@#$%^&*)";
+                }
+    
+                return true;
+            }
+    
+            function checkPassword() {
+                const password = document.getElementById("password").value;
+                const result = validatePassword(password);
+    
+                if (result === true) {
+                    document.getElementById("error").textContent = "";
+                } else {
+                    document.getElementById("error").textContent = result;
+                }
+    
+                event.preventDefault();
+            }
+    
+            // Course Selection Dropdown
+            const dropdown1 = document.getElementById("dropdown1");
+            const dropdown2 = document.getElementById("dropdown2");
+    
+            dropdown1.addEventListener("change", () => {
+                const selectedOption = dropdown1.value;
+    
+                const data = {
+                    Bachelors: ["BCA", "B.Tech-CSE", "B.Tech-CSE(AI & ML)", "B.Tech-ECE", "B.Tech-IT", "B.Tech-EE", "B.Tech-AEIE"],
+                    Masters: ["MCA", "M.Tech"]
+                };
+    
+                if (selectedOption) {
+                    dropdown2.disabled = false;
+                    dropdown2.innerHTML = `<option value="">Please select an option</option>`;
+    
+                    data[selectedOption].forEach(option => {
+                        dropdown2.innerHTML += `<option value="${option}">${option}</option>`;
+                    });
+                } else {
+                    dropdown2.disabled = true;
+                    dropdown2.innerHTML = `<option value="">Please select an option from dropdown 1</option>`;
+                }
+            });
+        });
+    </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+</body>
+</html>

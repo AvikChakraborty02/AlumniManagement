@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Coordinator | Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    {% load static %}
+    <link rel="icon" type="image/png" href="{% static 'logo3.png' %}">
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Nunito:600,700" rel="stylesheet"> 
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    
+    <script type="text/javascript">
+      google.charts.load("current", {packages:["corechart"]});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable({{values | safe}});
+
+        var options = {
+          title: 'Departmental Statistics of Alumni',
+          is3D:true,
+          width:370,
+          height:370,
+          legend:{
+            position:'bottom',
+            textStyle:{
+              fontSize: 16,
+            }
+          }
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+        chart.draw(data, options);
+      }
+    </script>
+  
+  <style>
+    body{
+        font-family: 'Nunito', sans-serif ;
+    }
+    p{
+        font-size: 16px;
+    }
+    nav{
+        background-color: rgb(52, 8, 5);
+        position: -webkit-sticky;
+        position: sticky;
+        z-index: 9999;
+        top: 0;
+    }
+    .nav-item:hover{
+        position: relative;
+        transform: scale(1.1);
+        transition: 0.6s;
+    }
+    .offcanvas{
+      z-index: 10000;
+      position: fixed;
+    }
+    .offcanvas-header{
+        margin-top: 10%;
+    }
+    .element{
+      display: flex;
+      justify-content: start;
+      margin-top: 0%;
+      align-items: center;
+    }
+    .items{
+      display: flex;
+      justify-content: center;
+      align-items: start;
+      margin-top: 1%;
+      padding: 2%;
+    }
+    #button{
+            background-color:rgb(52, 8, 5) ;
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            font-size: 16px;
+        }
+    #button i{
+            margin-right: 4px;
+            line-height: 1;  /* Ensures the icon aligns with the text */
+            vertical-align: middle;
+            padding-bottom: 1%;
+    }
+    #record-card:hover{
+      position: relative;
+      transform: scale(1.1);
+      transition: 0.6s;
+    }
+    .changepassword{
+      display: flex;
+      justify-content: end;
+    }
+    </style>
+  </head>
+  <body>
+    
+    <!--nav bar start -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <img src="{%static 'logo3.png'%}" alt="" width="50" height="50" class="d-inline-block align-text-center">
+                <strong style="text-wrap: balance;">RCC Institute of Information Technology</strong>
+            </a>
+            <div class="changepassword">
+              <a href="/change_password_otp"><button type="button" class="btn btn-outline-light" id="button">Change Password <i class="bi bi-key" style="margin-left:4px ; margin-right: 0;"></i></button></a>
+              &nbsp;
+              <a href="/logout/"><button type="button" class="btn btn-outline-light" id="button">Log Out <i class="bi bi-box-arrow-left" style="margin-left:4px ; margin-right: 0;"></i></button></a>
+            </div>
+          </div>
+    </nav>  
+    
+    <!-- Dashboard Button-->
+    <div class="element">
+      <a data-bs-toggle="offcanvas" style="color: black; font-size: 30px; margin-left: 1%;" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+        <i class="bi bi-list"></i></a>
+        <h3 style="margin-left: 1%;margin-top: 1.5%;">Home</h3> 
+    </div> 
+      <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+          <h3 class="offcanvas-title" id="offcanvasExampleLabel" style="color: rgb(52, 8, 5);">Dashboard</h3>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <div>
+            <a href="/admin_home" style="color: rgb(52, 8, 5);text-decoration: none;"><div class="items"><i class="bi bi-house-fill"></i><h5 style="margin-left: 2%; margin-top: 1%;">Home</h5></div></a>
+            <hr style="margin: auto;">
+            <a href="/view_application" style="color: rgb(52, 8, 5);text-decoration: none;"><div class="items"><i class="bi bi-eye-fill"></i><h5 style="margin-left: 2%; margin-top: 1%;">View Applications</h5></div></a>
+            <hr style="margin: auto;">
+            <a href="/search_alumni" style="color: rgb(52, 8, 5);text-decoration: none;"><div class="items"><i class="bi bi-search"></i><h5 style="margin-left: 2%; margin-top: 1%;">Search Alumni</h5></div></a>
+            <hr style="margin: auto;">
+            <a href="/add_admin" style="color: rgb(52, 8, 5);text-decoration: none;"><div class="items"><i class="bi bi-person-plus-fill"></i><h5 style="margin-left: 2%; margin-top: 1%;">Add Coordinator</h5></div></a>
+            <hr style="margin: auto;">
+            <a href="/coordinator_details" style="color: rgb(52, 8, 5);text-decoration: none;"><div class="items"><i class="bi bi-card-list"></i><h5 style="margin-left: 2%; margin-top: 1%;">Coordinator Details</h5></div></a>
+            <hr style="margin: auto;">
+            <a href="/admin_news" style="color: rgb(52, 8, 5);text-decoration: none;"><div class="items"><i class="bi bi-newspaper"></i><h5 style="margin-left: 2%; margin-top: 1%;">News</h5></div></a>
+          </div>
+        </div>
+      </div>
+
+    <!-- Header Starts -->
+    <br>
+    <h3 style="margin-left: 1%;text-align: center;">Welcome Alumni Coordinator {{ obj }}!</h3>
+    <br>
+    <!-- Card Starts -->
+     <div class="row" style="width: 100%;margin: auto;">
+        <div class="col d-flex justify-content-center">
+          <div id="donutchart" class="chart"></div>
+        </div>
+        <div class="col d-flex justify-content-center align-items-center mt-2">
+          <div class="card border-3" style="width: 22rem;" id="record-card">
+            <div class="card-body">
+              <p>Alumni Statistics (Departmental)</p>
+              <div class="row">
+              <div class="col">
+                <ul style="list-style-type: none; padding: 0; margin: 0; ">
+                  <li>B.Tech-CSE</li>
+                  <li>B.Tech-CSE(AI & ML)</li>
+                  <li>B.Tech-ECE</li>
+                  <li>B.Tech-IT</li>
+                  <li>B.Tech-EE</li>
+                  <li>B.Tech-AEIE</li>
+                  <li>BCA</li>
+                  <li>MCA</li>
+                  <li>M.Tech</li>
+                </ul>
+              </div>
+              <div class="col-2" style="text-align: end;">
+                <ul style="list-style-type: none; padding: 0; margin: 0;">
+                  <li>{{details.cse}}</li>
+                  <li>{{details.aiml}}</li>
+                  <li>{{details.ece}}</li>
+                  <li>{{details.it}}</li>
+                  <li>{{details.ee}}</li>
+                  <li>{{details.aeie}}</li>
+                  <li>{{details.bca}}</li>
+                  <li>{{details.mca}}</li>
+                  <li>{{details.mtech}}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col d-flex justify-content-center align-items-center mt-2">
+        <div class="card border-3" style="width: 22rem;" id="record-card">
+          <div class="card-body text-center">
+            <p> Total Coordinators </p>
+            <p style="font-size: 50px;"> {{total_admin}} </p>
+            <p> Total Alumni </p>
+            <p style="font-size: 50px;"> {{total_alumni}} </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+<br><br><br>
+<!--Footer-->
+    <footer class="footer mt-auto py-3 bg-light">
+        <div class="container-fl text-center">
+            <span class="text">&copy; 2024 by RCC Institute of Information Technology | All Rights Reserved.</span>
+        </div>
+    </footer>
+
+    <!-- BootStrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  </body>
+</html>
