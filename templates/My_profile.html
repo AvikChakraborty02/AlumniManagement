@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alumni | My Profile</title>
+    {% load static %}
+    <link rel="icon" type="image/png" href="{% static 'logo3.png' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Nunito:600,700" rel="stylesheet"> 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <style>
+        body{
+            font-family: 'Nunito',sans-serif; ;
+        }
+        p{
+            font-size: 16px;
+        }
+        i{
+          font-family: 'Times New Roman', Times, serif;
+        }
+        nav{
+            background-color: rgb(52, 8, 5);
+            position: -webkit-sticky;
+            position: sticky;
+            z-index: 9999;
+            top: 0;
+        }
+        .nav-item:hover{
+            position: relative;
+            transform: scale(1.1);
+            transition: 0.6s;
+        }
+        .offcanvas{
+            z-index: 10000;
+            position: fixed;
+        }
+        .offcanvas-header{
+            margin-top: 10%;
+        }
+        .element{
+          display: flex;
+          justify-content: start;
+          margin-top: 0%;
+          align-items: center;
+        }
+        .items{
+          display: flex;
+          justify-content: center;
+          align-items: start;
+          margin-top: 1%;
+          padding: 2%;
+        }
+        #button{
+            background-color:rgb(52, 8, 5) ;
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            font-size: 16px;
+        }
+        #record-card:hover{
+          position: relative;
+          transform: scale(1.1);
+          transition: 0.6s;
+        }
+        .changepassword{
+          display: flex;
+          justify-content: end;
+        }
+        .card{    
+          background-color: #F5F5DC;
+          margin-left: 3%;
+        }
+        .container{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        #text{
+            line-height: 0.7;
+            font-size: 17px;
+        }
+        .postimage{
+            display: flex;
+            justify-content: center;
+        }
+        #post-card{
+            width: 90%;
+            margin-left: 5%;
+        }
+        .post-header{
+            display: flex;
+            align-items: center;
+        }
+        .load-more-button{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 2%;
+            margin-bottom: 2%;
+        }
+        .edit-delete{
+            display: flex;
+            justify-content: end;
+            font-size: 25px;
+        }
+        #edit{
+            margin-right: 2%;
+            color: black;
+        }
+        #edit:hover{
+            color: #007bff;
+        }
+        #delete{
+            margin-right: 2%;
+            color: black;
+        }
+        #delete:hover{
+            color: #dc3545;
+        }
+        
+        #changeProfilePictureBtn {
+            background-color: rgb(52, 8, 5);
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            font-size: 16px;
+        }
+
+        #changeProfilePictureBtn i {
+            margin-right: 4px;
+            line-height: 1;  /* Ensures the icon aligns with the text */
+            vertical-align: middle;
+            padding-bottom: 1%;
+        }
+        .not-visible {
+            display: none;
+        }
+       
+    </style>
+</head>
+<body>
+    <!--nav bar start -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="{% static 'logo3.png'%}" alt="" width="50" height="50" class="d-inline-block align-text-center">
+                <strong style="text-wrap: balance;">RCC Institute of Information Technology</strong>
+            </a>
+            <div class="changepassword">
+              <a href="/alumni_change_password_otp"><button type="button" class="btn btn-outline-light" id="button">Change Password <i class="bi bi-key" style="margin-left:4px ; margin-right: 0;"></i></button></a>
+              &nbsp;
+              <a href="/logout/"><button type="button" class="btn btn-outline-light" id="button" >Log Out <i class="bi bi-box-arrow-left" style="margin-left:4px ; margin-right: 0;"></i></button></a>
+            </div>
+        </div>
+    </nav>  
+    
+    <!-- Dashboard Button-->
+  <div class="element">
+    <a data-bs-toggle="offcanvas" style="color: black; font-size: 35px; margin-left: 1%; margin-top: 0.7%;" href="#offcanvasExample"
+      role="button" aria-controls="offcanvasExample">
+      <i class="bi bi-list"></i></a>
+    <h3 style="margin-left: 1%; margin-top: 1.5%;"> My Profile</h3>
+  </div>
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header">
+      <h3 class="offcanvas-title" id="offcanvasExampleLabel" style="color: rgb(52, 8, 5);">Dashboard</h3>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <div>
+        <a href="/alumni_home" style="color: rgb(52, 8, 5);text-decoration: none;">
+          <div class="items"><i class="bi bi-house-fill"></i>
+            <h5 style="margin-left: 2%; margin-top: 1%;">Home</h5>
+          </div>
+        </a>
+        <hr style="margin: auto;">
+        <a href="/my_profile" style="color: rgb(52, 8, 5);text-decoration: none;">
+          <div class="items"><i class="bi bi-file-earmark-post"></i>
+            <h5 style="margin-left: 2%; margin-top: 1%;">My Profile</h5>
+          </div>
+        </a>
+        <hr style="margin: auto;">
+        <a href="/batchmates" style="color: rgb(52, 8, 5);text-decoration: none;">
+          <div class="items"><i class="bi bi-people-fill"></i>
+            <h5 style="margin-left: 2%; margin-top: 1%;">Batchmates</h5>
+          </div>
+        </a>
+        <hr style="margin: auto;">
+        <a href="/alumni_search_alumni" style="color: rgb(52, 8, 5);text-decoration: none;">
+          <div class="items"><i class="bi bi-search"></i>
+            <h5 style="margin-left: 2%; margin-top: 1%;">Search Alumni</h5>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+        <div class="container">
+            <!--Card Starts-->
+            <div class="card mt-3 border-3" style="width: 18rem;">
+                <img src="{{data_obj.profile_picture.url}}" class="card-img-top" alt="..." height="300" width="300" style="object-fit: cover; object-position: center;">
+                <div class="card-body">
+                    <h4 class="card-title mb-2" style="text-align: center;"><b>{{data_obj.name}}</b></h4>
+                    <p id="text">Email: {{data_obj.email}}</p>
+                    <p id="text">Mobile: {{data_obj.phno}}</p>
+                    {% if data_obj.linked_in_url %}
+                    <p id="text">LinkedIn: <a href="#" target="_blank"> LinkedIn Profile</a></p>
+                    {% endif %}
+                    <div class="submit-button" style="display: flex; justify-content: center;">
+                        <a href="/edit_profile"><button type="submit" class="btn" id="button">
+                           <i class="bi bi-pencil-square"></i>Edit Profile</button></a>
+                    </div>
+                    <br>
+                    <!-- Button to Open the Modal -->
+                     <div class="changeProfilePicture d-flex justify-content-center">
+                        <button type="button" class="btn" id="changeProfilePictureBtn" data-toggle="modal" data-target="#profilePictureModal"><i class="bi bi-person-circle"></i>
+                            Change Profile Picture
+                        </button>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="profilePictureModal" tabindex="-1" role="dialog" aria-labelledby="profilePictureModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h5 class="modal-title" id="profilePictureModalLabel">Select Profile Picture</h5>
+                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                            </button>
+                            </div>
+                            <div class="modal-body">
+                            <!-- File Input -->
+                            <form id="uploadForm" action="/update_profile_picture/" method="post" enctype="multipart/form-data">
+                              {% csrf_token %}  
+                              <div class="row d-flex justify-content-start align-items-center">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="profilePicture">Upload a .jpg or .jpeg file (max 1MB)</label>
+                                            <input type="file" class="form-control-file" id="profilePicture" name="profile_picture" accept=".jpg,.jpeg"><br>
+                                            <small id="fileHelp" class="form-text text-muted">Only .jpg or .jpeg formats allowed.</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <!-- Image Preview -->
+                                         <div class="profile_picture d-flex justify-content-center">
+                                            <img id="imagePreview" src="#" alt="Image Preview" height="250" width="200" class="rounded" style="object-fit: cover; object-position: center;">
+                                         </div>
+                                    </div>
+                                </div>      
+                            </div>
+                            <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn" id="uploadBtn" style="background-color: rgb(52, 8, 5); color: white;">Upload</button>
+                            </div>
+                          </form>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Card-->
+            <div class="card mt-3 border-3" style="width: 22rem;">
+                <div class="card-body">  
+                    <h5><b>Personal Details:</b></h5>
+                    <hr style="margin-top: 0%">
+                    <p id="text">Date of Birth : {{data_obj.dob}}</p>
+                    <p id="text" style="line-height: normal;">Address : {{data_obj.address}}</p>
+                    <br>
+                    <h5><b>Educational Qualification:</b></h5>
+                    <hr style="margin-top: 0%">
+                    <p id="text">Highest Qualification: {{data_obj.qualification}}</p>
+                    <p id="text">Course: {{data_obj.course}}</p>
+                    <p id="text">Passing Year: {{data_obj.year_of_passing}}</p>
+                    <p id="text">Marks Obtained: {{data_obj.percentage}}%</p>
+                    <br>
+                    <h5><b>Work Experience:</b></h5>
+                    <hr style="margin-top: 0%">
+                    <p id="text">Organization: {{data_obj.organization_name}}</p>
+                    <p id="text">Date of Joining: {{data_obj.doj_month}}/{{data_obj.doj_year}}</p>
+                    <p id="text">Job Profile: {{data_obj.job_profile}}</p>
+                    <p id="text">Job Location: {{data_obj.job_location}}</p>
+                </div>
+            </div>
+        </div>
+        <br>
+        <hr style="width: 90%; margin-left: 5%;">
+        
+        <!--Your Posts-->
+        <h3 style="text-align: center;"><b>Your Posts</b></h3>
+        <!-- Card Starts -->
+         <div class="content" id="content">
+         {% for post in post_obj %}
+        <div class="post card mt-3" id="post-card">           
+            <div class="card-body">
+                <div class="post-header">
+                    <img src="{{data_obj.profile_picture.url}}" alt="Profile Image" height="30" width="30" style="border-radius: 100px; object-fit: cover; object-position: center;">&nbsp;
+                    <div class="post-info">
+                      <span class="post-name">&nbsp;&nbsp;<b>{{data_obj.name}}</b></span>
+                      <span class="post-date"><i class="bi bi-dot"></i>{{post.posted_on}}</span>
+                    </div>
+                </div>
+              <div class="edit d-flex justify-content-center">
+                <h4 style="margin: auto;display: inline-block;">{{post.title}}</h4>
+              </div>
+              <hr>
+              <p>{{post.description}}</p>
+              {% if post.link1 %}
+              <p style="display: inline-block;">Links - </p><span><a href="{{post.link1}}" target="_blank" style="margin-left: 1%;">{{post.link1}}</a></span>
+              {% endif %}
+              {% if post.link2 %}
+              <p style="display: inline-block;">, </p><span><a href="{{post.link2}}" target="_blank" style="margin-left: 1%;">{{post.link2}}</a></span>
+              {% endif %}
+              {% if post.link3 %}
+              <p style="display: inline-block;">, </p><span><a href="{{post.link3}}" target="_blank" style="margin-left: 1%;">{{post.link3}}</a></span>
+              {% endif %}
+                <div class="edit-delete">
+                    <a href="/edit_posts/{{post.post_id}}" id="edit"><i class="bi bi-pencil-fill"></i></a>
+                    <a href="/delete_post/{{post.post_id}}" id="delete"><i class="bi bi-trash-fill"></i></a>
+                </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        
+          <!--Load More Button-->
+          <div class="load-more-button">
+            <button type="submit" class="btn" id="load-more-button" style="background-color:rgb(52, 8, 5) ; color: white; display: inline-flex; align-items: center; font-size: 16px;">Load More...</button>
+          </div>
+          <div class="alert alert-danger mt-2 not-visible mb-2" role="alert" id='alert' style="text-align: center; width: 90%; margin-left: 5%;">
+            No more post to load!!
+          </div>
+          {{totalpost_obj|json_script:"json-total"}}
+      </div> 
+      
+
+    <!--Footer-->
+    <footer class="footer mt-auto py-3 bg-light">
+        <div class="container-fl text-center">
+            <span class="text">&copy; 2024 by RCC Institute of Information Technology | All Rights Reserved.</span>
+        </div>
+    </footer>
+
+    <script>
+        // Image preview logic
+        document.getElementById('profilePicture').addEventListener('change', function(event) {
+          var file = event.target.files[0];
+    
+          if (file) {
+            var fileSizeInMB = file.size / 1024 / 1024; // Convert size to MB
+            var fileExtension = file.name.split('.').pop().toLowerCase();
+    
+            // Validate file size and format
+            if (fileExtension !== 'jpg' && fileExtension !== 'jpeg') {
+              alert('Only .jpg or .jpeg formats are allowed.');
+              return;
+            } else if (fileSizeInMB > 1) {
+              alert('File size must be less than 1 MB.');
+              return;
+            }
+    
+            // Show preview
+            var reader = new FileReader();
+            reader.onload = function(e) {
+              var imagePreview = document.getElementById('imagePreview');
+              imagePreview.src = e.target.result;
+              imagePreview.style.display = 'block'; // Show image preview
+            };
+            reader.readAsDataURL(file);
+          } else {
+            alert('Please select a file.');
+          }
+        });
+    
+        // Upload button click event
+        document.getElementById('uploadBtn').addEventListener('click', function() {
+          var fileInput = document.getElementById('profilePicture');
+          var file = fileInput.files[0];
+    
+          if (file) {
+            var fileSizeInMB = file.size / 1024 / 1024; // Convert size to MB
+            var fileExtension = file.name.split('.').pop().toLowerCase();
+    
+            if (fileExtension !== 'jpg' && fileExtension !== 'jpeg') {
+              alert('Only .jpg or .jpeg formats are allowed.');
+            } else if (fileSizeInMB > 1) {
+              alert('File size must be less than 1 MB.');
+            } else {
+              alert('File is valid for upload!');
+              // Proceed with form submission or AJAX request here
+            }
+          } else {
+            alert('Please select a file.');
+          }
+        });
+
+        //AJAX
+        // var _current_item = $('.single_content').length
+          // console.log(_current_item);
+          const loadBtn = document.getElementById('load-more-button');
+          const total = JSON.parse(document.getElementById('json-total').textContent);
+          const alert = document.getElementById('alert');
+
+          function loadmorePost() {
+              var _current_item = $('.post').length
+              const content_container = document.getElementById("content");
+              $.ajax({
+                  url: '{% url "my_profile_load_more" %}',
+                  type: 'GET',
+                  data: {
+                      'offset': _current_item
+                  },
+                  beforeSend: function () {
+                      loadBtn.classList.add('not-visible');
+                  },
+                  success: function (response) {
+                      const data = response.post_obj
+                      data.map(post => {
+                          console.log(post.title);
+                          content_container.innerHTML += `<div class="post card mt-3" id="post-card">           
+            <div class="card-body">
+                <div class="post-header">
+                    <img src="{{data_obj.profile_picture.url}}" alt="Profile Image" height="30" width="30" style="border-radius: 100px; object-fit: cover; object-position: center;">&nbsp;
+                    <div class="post-info">
+                      <span class="post-name">&nbsp;&nbsp;<b>{{data_obj.name}}</b></span>
+                      <span class="post-date"><i class="bi bi-dot"></i>${post.posted_on}</span>
+                    </div>
+                </div>
+              <div class="edit d-flex justify-content-center">
+                <h4 style="margin: auto;display: inline-block;">${post.title}</h4>
+              </div>
+              <hr>
+              <p>${post.description}</p>
+              {% if post.link1 %}
+              <p style="display: inline-block;">Links - </p><span><a href="${post.link1}" target="_blank" style="margin-left: 1%;">{{post.link1}}</a></span>
+              {% endif %}
+              {% if post.link2 %}
+              <p style="display: inline-block;">, </p><span><a href="${post.link2}" target="_blank" style="margin-left: 1%;">{{post.link2}}</a></span>
+              {% endif %}
+              {% if post.link3 %}
+              <p style="display: inline-block;">, </p><span><a href="${post.link3}" target="_blank" style="margin-left: 1%;">{{post.link3}}</a></span>
+              {% endif %}
+                <div class="edit-delete">
+                    <a href="/edit_posts/${post.post_id}" id="edit"><i class="bi bi-pencil-fill"></i></a>
+                    <a href="/delete_post/${post.post_id}" id="delete"><i class="bi bi-trash-fill"></i></a>
+                </div>
+            </div>
+          </div>`
+                      })
+                      if (_current_item == total) {
+                          alert.classList.remove('not-visible');
+                      } else {
+                          loadBtn.classList.remove('not-visible');
+                      }
+                  },
+                  error: function (err) {
+                      console.log(err);
+                  },
+              });
+          }
+          loadBtn.addEventListener('click', () => {
+              loadmorePost()
+          });
+
+
+          //formatting date
+          
+
+          document.addEventListener('DOMContentLoaded', function() {
+        // Select all elements with the class 'post-date'
+        const dateElements = document.querySelectorAll('.post-date');
+
+        // Iterate over each element and format the date
+        dateElements.forEach(element => {
+          // Create a Date object from the input string
+          const dateString=element.textContent;
+          const date = new Date(dateString);
+
+          // Extract year, month, and day components
+          const year = date.getFullYear();
+          const month = String(date.getMonth() + 1).padStart(2, '0'); // Add leading zero if needed
+          const day = String(date.getDate()).padStart(2, '0'); // Add leading zero if needed   
+
+
+          // Format the date in the desired format
+          const formattedDate = `${year}-${month}-${day}`;
+          console.log(formattedDate);
+          element.innerHTML=`<i class="bi bi-dot"></i>${formattedDate}`;
+          });
+        });
+          
+
+      </script>
+    
+        <!-- BootStrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,469 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load static %}
+    <link rel="icon" type="image/png" href="{% static 'logo3.png' %}">
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Nunito:600,700" rel="stylesheet"> 
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Alumni | RCCIIT</title>
+    <style>
+        body{
+            font-family: 'Nunito',sans-serif; ;
+        }
+        p{
+            font-size: 16px;
+        }
+        i{
+          font-family: 'Times New Roman', Times, serif;
+        }
+        nav{
+            background-color: rgb(52, 8, 5);
+            position: -webkit-sticky;
+            position: sticky;
+            z-index: 9999;
+            top: 0;
+        }
+        .nav-item:hover{
+            position: relative;
+            transform: scale(1.1);
+            transition: 0.6s;
+        }
+        .carousel-inner{
+            height: auto;
+            margin:auto;
+        }
+        #content{
+            background-color: rgb(240, 237, 237);
+        }
+        #button{
+            width:20%;
+            margin:auto;
+            background-color: rgb(52, 8, 5);
+            color: white;
+        }
+        #modal{
+            background-color:rgb(52, 8, 5) ;
+            color: white;
+            align-items: end;
+        }
+        #loginimage{
+            display: block;
+        }
+        #cardalumni{
+          line-height: normal;
+          margin-left: 4%;
+          margin-top: 4%;
+          margin-bottom: 5%;
+        }
+        #cardalumni:hover{
+          color: white;
+          background-color: rgb(68, 22, 18);
+          transition: background-color 0.3s ease-in,color 0.3s ease-in;
+        }
+        #imagealumni{
+          border-radius: 10px;
+        }
+        #contalumni{
+          display: flex;
+          flex-wrap: wrap;
+        }
+        .nobullets{
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+          font-size: 18px;
+        }
+        .socialmedia{
+          margin-left: 2%;
+          padding: auto;
+          font-size: 25px;
+        }
+        .socialmedia1{
+          margin-left: 0%;
+          padding: auto;
+          font-size: 25px;
+        }
+        #facebook{
+          margin-left: 0%;
+        }
+        #facebook:hover{
+          color: #1877F2;
+        }
+        #linkedin:hover{
+          color: #0077B5;
+        }
+        #instagram:hover{
+          color: #E1306C;
+        }
+        #our-glory-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr; /* Adjust column widths as needed */  
+        }
+        #our-glory-heading{
+          text-align: center; 
+          margin-top: 25%;
+        }
+        #our-glory-image{
+          padding: 10%;
+        }
+        #map{
+          color: black;
+          text-decoration: none;
+        }
+        #map:hover{
+          color: blue;
+          text-decoration: underline;
+        }
+        .fade-out {
+            animation: fadeOut 5s ease-in-out;
+            opacity: 0;
+        }
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
+          }
+    </style>
+</head>
+
+<body>
+    <!--nav bar start -->
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <img src="{% static 'logo3.png'%}" alt="" width="50" height="50" class="d-inline-block align-text-center">
+                    <strong style="text-wrap: balance;">RCC Institute of Information Technology</strong></a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#login">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#our glory">Our Glory</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#contactus">Contact Us</a>
+                        </li>
+                    </ul>
+                    <a href="register/" class="register-btn"><button type="button" class="btn btn-outline-light">Register</button></a>
+                </div>
+            </div>
+        </nav> 
+    <!-- Message or Alert -->
+     
+     {% for message in messages %}
+     <div class="alert alert-danger fade-out" role="alert" style="justify-content: center;width: 22rem;text-align: center;position: sticky;top: 3%;display: inline-block;left: 39%;z-index: 9999;">
+         {{ message }}
+         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" style="float: right;"></button>
+     </div>
+     {% endfor %}
+    
+    <!--Caraosel Starts-->
+    <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="static/carousal6.jpg" class="d-block w-100" alt="...">
+          <div class="carousel-caption d-sm-flex d-md-block ">
+            <h1>Welcome to RCCIIT!</h1>
+            <p>A very warm welcome to our second home again!</p>
+        </div>
+        </div>
+        <div class="carousel-item">
+          <img src="static/carousal7.jpg" class="d-block w-100" alt="...">
+          <div class="carousel-caption d-sm-flex d-md-block ">
+            <h1>Welcome to RCCIIT!</h1>
+            <p>A very warm welcome to our second home again!</p>
+        </div>
+        </div>
+        <div class="carousel-item">
+          <img src="static/carousal8.jpg" class="d-block w-100" alt="...">
+          <div class="carousel-caption d-sm-flex d-md-block ">
+            <h1>Welcome to RCCIIT!</h1>
+            <p>A very warm welcome to our second home again!</p>
+        </div>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+
+    <!-- Card Starts -->
+    <div class="container-fluid" id="content">
+        <div class="row align-items-center">
+          <div class="col-sm-6">
+            <div class="card border-0" id="content">
+                <div class="card-body">
+                    <h3>Welcome to the Alumni Page of RCCIIT</h3>
+                    <p style="text-align: left;">Here, we honor the remarkable journey and achievements of our alumni who continue to inspire us with their success and contributions to society.this page is dedicated to fostering a lifelong relationship between the institution and its esteemed alumni. Welcome back to where it all began!</p>
+                </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <img src="{% static 'card.webp' %}" alt="" height="50%" width="100%">      
+          </div>
+        </div>
+      </div>
+
+    <!-- Header Starts -->
+    <br id="login">
+    <br>
+    <div class="container" id="our-glory-container">
+      <div class="row" id="our-glory-image"><img src="{% static 'glory1.png' %}"></div>
+      <div class="row" id="our-glory-heading"><h1><b>Login</b></h1></div>
+      <div class="row" id="our-glory-image"><img src="{% static 'glory2.png' %}"></div>
+    </div>
+    <br>
+    
+     <!-- Login Starts -->
+    <div class="container-fluid">
+        <div class="row align-items-start">
+          <div class="col-sm-6 text-center">
+            <div class="card border-0">
+                <div class="card-body">
+                    <h3><b>Alumni Coordinator</b></h3>
+                    <img src="{% static 'login-1.svg' %}" alt="" height="300" width="300">
+                </div>
+                <button type="button" class="btn" id="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Login
+                </button>
+            </div>
+          </div>
+          <div class="col-sm-6 text-center">
+            <div class="card border-0">
+                <div class="card-body">
+                    <h3><b>Alumni</b></h3>
+                    <img src="{% static 'login-2.svg'%}" alt="" height="300" width="300">
+                </div>
+                <button type="button" class="btn" id="button" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+                    Login
+                </button>
+            </div>      
+          </div>
+        </div>
+      </div>
+
+  <!-- Alumni-coordinator Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel"><b>Alumni Co-ordinator Login</b></h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="container">
+                <div class="row align-items-start">
+                  <div class="col-sm-6">
+                    <div class="d-flex align-items-center justify-content-center">
+                        <img src="{% static 'login-4.svg'%}" alt="" id="loginimage" height="200" width="200">
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <form action="/admin_login_verification/" method="post">
+                      {% csrf_token %}
+                    <div class="form-floating mb-3 mt-4">
+                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email" required>
+                        <label for="floatingInput">Email</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password" required>
+                        <label for="floatingPassword">Password</label>
+                    </div>  
+                  </div>
+                </div>
+              </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn" id="modal">Login</button>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Alumni Modal -->
+  <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel"><b>Alumni Login</b></h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="container">
+                <div class="row align-items-start">
+                  <div class="col-sm-6">
+                    <form action="/alumni_login_verification/" method="post">
+                      {% csrf_token %}
+                    <div class="form-floating mb-3 mt-4">
+                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email" required>
+                        <label for="floatingInput">Email Address</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password" required>
+                        <label for="floatingPassword">Password</label>
+                    </div>  
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="d-flex align-items-center justify-content-center">
+                        <img src="{% static 'login-5.svg'%}" alt="" id="loginimage" height="200" width="200">
+                    </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn" id="modal">Login</button>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+
+    <!--Our Glory-->
+    <br id="our glory">
+    <br>
+    <div class="container" id="our-glory-container">
+      <div class="row" id="our-glory-image"><img src="static/glory1.png"></div>
+      <div class="row" id="our-glory-heading"><h1><b>Our Glory</b></h1></div>
+      <div class="row" id="our-glory-image"><img src="static/glory2.png"></div>
+    </div>
+    <br>
+    <!--Card Starts-->
+    <div class="container" id="contalumni">
+      <div class="row align-items-start">
+        <div class="col d-flex align-items-start justify-content-center">
+          {% for record in alumni_list_1 %}
+          <div class="card" id="cardalumni" style="width: 22rem;">
+            <img src="{{ record.profile_picture.url }}" class="card-img-top" alt="..." id="imagealumni" style="object-fit: cover; object-position: center;" height="300" width="300">
+            <div class="card-body">
+              <h5 class="card-title" style="font-size: 22px;"><b>{{ record.name }} {% if record.linked_in_url %}<a href="{{ record.linked_in_url }}" target="_blank"><i class="bi bi-linkedin"></i></a>{% endif %}</b></h5>
+              <p class="card-text">{{ record.job_profile }} | @{{ record.organization_name }}</p>
+              <p class="card-text">{{ record.course }}, Class Of {{ record.year_of_passing }}</p>
+              <i class="bi bi-geo-alt-fill">{{ record.job_location }}</i>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+     </div>
+
+     <!--Second-->
+     <div class="row align-items-start">
+      <div class="col d-flex align-items-start justify-content-center">
+        {% for record in alumni_list_2 %}
+        <div class="card" id="cardalumni" style="width: 22rem;">
+          <img src="{{ record.profile_picture.url }}" class="card-img-top" alt="..." id="imagealumni" style="object-fit: cover; object-position: center;" height="300" width="300">
+          <div class="card-body">
+            <h5 class="card-title" style="font-size: 22px;"><b>{{ record.name }} {% if record.linked_in_url %}<a href="{{ record.linked_in_url }}" target="_blank"><i class="bi bi-linkedin"></i></a>{% endif %}</b></h5>
+            <p class="card-text">{{ record.job_profile }} | @{{ record.organization_name }}</p>
+            <p class="card-text">{{ record.course }}, Class Of {{ record.year_of_passing }}</p>
+            <i class="bi bi-geo-alt-fill">{{ record.job_location }}</i>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+   </div>
+
+   <!--Third-->
+   <div class="row align-items-start">
+    <div class="col d-flex align-items-start justify-content-center">
+      {% for record in alumni_list_3 %}
+      <div class="card" id="cardalumni" style="width: 22rem;">
+        <img src="{{ record.profile_picture.url }}" class="card-img-top" alt="..." id="imagealumni" style="object-fit: cover; object-position: center;" height="300" width="300">
+        <div class="card-body">
+          <h5 class="card-title" style="font-size: 22px;"><b>{{ record.name }} {% if record.linked_in_url %}<a href="{{ record.linked_in_url }}" target="_blank"><i class="bi bi-linkedin"></i></a>{% endif %}</b></h5>
+          <p class="card-text">{{ record.job_profile }} | @{{ record.organization_name }}</p>
+          <p class="card-text">{{ record.course }}, Class Of {{ record.year_of_passing }}</p>
+          <i class="bi bi-geo-alt-fill">{{ record.job_location }}</i>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+ </div>
+
+   </div>
+
+    <!--Ending design-->
+    <div class="container">
+      <div class="row" style="justify-content: center;"><img src="static/ending.png" style="width: 50%;">
+      </div>
+    </div>
+   <hr id="contactus">
+    
+   <!-- Footer Starts -->
+    <div class="container-fluid" id="content">
+      <div class="row align-items-center">
+        <div class="col-sm-6">
+          <img src="{%static 'connect-1.svg'%}" alt="" height="50%" width="100%">      
+        </div>
+        <div class="col-sm-6">
+          <div class="card border-0" id="content">
+              <div class="card-body">
+                  <h2>Contact Us</h2>
+                  <ul class="nobullets">
+                    <li><i class="bi bi-geo-alt-fill"></i><a id="map" href="https://maps.app.goo.gl/iGfk6BKHfqEJZjrX8" target="_blank"> Canal S Rd, Beleghata, Kolkata, West Bengal, PIN-700015</a></li>
+                    <li><i class="bi bi-envelope-fill"></i> alumnicoordinator@rcciit.org.in</li>
+                    <li><i class="bi bi-telephone-fill"></i> 6290821297</li>
+                  </ul>
+                  <br>
+                  <h4>Follow Us:</h4>
+                  <a href="https://www.facebook.com/rcciit.in?mibextid=ZbWKwL" style="color: black;" class="socialmedia1" ><i class="bi bi-facebook" id="facebook" ></i></a>
+                  <a href="https://www.linkedin.com/school/rcciitalum/" style="color: black;" class="socialmedia" ><i class="bi bi-linkedin" id="linkedin"></i></a>
+                  <a href="https://www.instagram.com/rcciit_kolkata?igsh=Y2t5b2Q0anlqaXZy" style="color: black;" class="socialmedia" ><i class="bi bi-instagram" id="instagram"></i></a>
+                  <br><br>
+                  <p style="text-align: center;">&copy; 2024 RCC Institute of Information Technology | All Rights Reserved   </p>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script>
+      setTimeout(function() {
+          $('.alert').remove();
+      }, 5000); // 5000 milliseconds = 5 seconds
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    -->
+</body>
+
+</html>
