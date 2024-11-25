@@ -241,8 +241,11 @@ def delete_application(request,application_id):
     if ('email') in request.session and Coordinator.objects.filter(email=email).exists():
         obj=Application.objects.get(application_id=application_id)
         try:
-            os.remove('media/'+str(obj.profile_picture))
-            os.remove('media/'+str(obj.certificate))
+            media_root=settings.MEDIA_ROOT
+            profile_path=os.path.join(media_root,str(obj.profile_picture))
+            certificate_path=os.path.join(media_root,str(obj.certificate))
+            os.remove(profile_path)
+            os.remove(certificate_path)
             obj.delete()
         except:
             return redirect('error_page')
@@ -265,8 +268,11 @@ def delete_alumni(request,alumni_id):
     if ('email') in request.session and Coordinator.objects.filter(email=email).exists():
         obj=Alumni.objects.get(alumni_id=alumni_id)
         try:
-            os.remove('media/'+str(obj.profile_picture))
-            os.remove('media/'+str(obj.certificate))
+            media_root=settings.MEDIA_ROOT
+            profile_path=os.path.join(media_root,str(obj.profile_picture))
+            certificate_path=os.path.join(media_root,str(obj.certificate))
+            os.remove(profile_path)
+            os.remove(certificate_path)
             obj.delete()
         except:
             return redirect('error_page')
@@ -360,7 +366,9 @@ def delete_events(request,event_id):
         email=request.session.get('email')
         if ('email') in request.session and Coordinator.objects.filter(email=email).exists():
             obj=Events.objects.get(event_id=event_id)
-            os.remove('media/'+str(obj.event))
+            media_root=settings.MEDIA_ROOT
+            event_path=os.path.join(media_root,str(obj.event))
+            os.remove(event_path)
             obj.delete()
             return redirect('manage_events')
     except:
