@@ -871,7 +871,9 @@ def update_profile_picture(request):
         if request.method=='POST' and ('email') in request.session and Alumni.objects.filter(email=email).exists():
             temp=Alumni.objects.get(email=email)
             profile_picture=request.FILES['profile_picture']
-            os.remove('media/'+str(temp.profile_picture))
+            media_root=settings.MEDIA_ROOT
+            profile_path=os.path.join(media_root,str(temp.profile_picture))
+            os.remove(profile_path)
             temp.profile_picture=profile_picture
             temp.save()
             return redirect('my_profile')
