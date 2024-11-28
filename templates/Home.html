@@ -360,9 +360,9 @@
     </div>
     <br>
     <!--Card Starts-->
-    <div class="container" id="contalumni">
-      <div class="row align-items-start">
-        <div class="col d-flex align-items-start justify-content-center">
+    <div class="container-fluid" id="contalumni">
+      <div class="row align-items-start" style="width:100%">
+        <div class="col d-flex align-items-start justify-content-center" style="flex-wrap:wrap;">
           {% for record in alumni_list_1 %}
           <div class="card" id="cardalumni" style="width: 22rem;">
             <img src="{{ record.profile_picture.url }}" class="card-img-top" alt="..." id="imagealumni" style="object-fit: cover; object-position: center;" height="300" width="300">
@@ -378,8 +378,8 @@
      </div>
 
      <!--Second-->
-     <div class="row align-items-start">
-      <div class="col d-flex align-items-start justify-content-center">
+     <div class="row align-items-start" style="width:100%">
+      <div class="col d-flex align-items-start justify-content-center"  style="flex-wrap:wrap;">
         {% for record in alumni_list_2 %}
         <div class="card" id="cardalumni" style="width: 22rem;">
           <img src="{{ record.profile_picture.url }}" class="card-img-top" alt="..." id="imagealumni" style="object-fit: cover; object-position: center;" height="300" width="300">
@@ -395,8 +395,8 @@
    </div>
 
    <!--Third-->
-   <div class="row align-items-start">
-    <div class="col d-flex align-items-start justify-content-center">
+   <div class="row align-items-start" style="width:100%">
+    <div class="col d-flex align-items-start justify-content-center"  style="flex-wrap:wrap;">
       {% for record in alumni_list_3 %}
       <div class="card" id="cardalumni" style="width: 22rem;">
         <img src="{{ record.profile_picture.url }}" class="card-img-top" alt="..." id="imagealumni" style="object-fit: cover; object-position: center;" height="300" width="300">
