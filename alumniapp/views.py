@@ -274,8 +274,9 @@ def delete_alumni(request,alumni_id):
             os.remove(profile_path)
             os.remove(certificate_path)
             obj.delete()
+            Posts.objects.filter(email=obj.email).delete()
         except:
-            return redirect('error_page')
+            return redirect('something_went_wrong')
         return redirect('search_alumni')
     else:
         return redirect('error_page')
