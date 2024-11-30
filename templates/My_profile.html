@@ -211,10 +211,10 @@
                 <img src="{{data_obj.profile_picture.url}}" class="card-img-top" alt="..." height="300" width="300" style="object-fit: cover; object-position: center;">
                 <div class="card-body">
                     <h4 class="card-title mb-2" style="text-align: center;"><b>{{data_obj.name}}</b></h4>
-                    <p id="text">Email: {{data_obj.email}}</p>
-                    <p id="text">Mobile: {{data_obj.phno}}</p>
+                    <p id="text"><i class="bi bi-envelope-fill"></i>&nbsp; {{data_obj.email}}</p>
+                    <p id="text"><i class="bi bi-telephone-fill"></i>&nbsp; {{data_obj.phno}}</p>
                     {% if data_obj.linked_in_url %}
-                    <p id="text">LinkedIn: <a href="#" target="_blank"> LinkedIn Profile</a></p>
+                    <p id="text">LinkedIn: <a href="{{data_obj.linked_in_url}}" target="_blank"> LinkedIn Profile</a></p>
                     {% endif %}
                     <div class="submit-button" style="display: flex; justify-content: center;">
                         <a href="/edit_profile"><button type="submit" class="btn" id="button">
