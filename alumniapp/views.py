@@ -4,7 +4,7 @@ from django.shortcuts import render,redirect
 from django.contrib import messages
 from alumniapp.models import OTP,Coordinator,Application,Alumni,Posts,Events
 from django.db.models import Q
-from google import genai
+import google.generativeai as genai
 
 import json
 import os
@@ -998,11 +998,16 @@ def  my_profile_load_more(request):
 def gemini_call(title,description):
     PROMPT_MESSAGE="post title and description will be given below. you only have to judge whether the post title and description is for a job vacancy or for a seminar or webinar or for some event announcement or some alumni meet. reply yes if the below post description and title matches the above criteria else reply no. the post description and title is given below:"
     QUERY_MESSAGE=PROMPT_MESSAGE+"\n"+title+"\n"+description
-    client = genai.Client(api_key="YOUR_GOOGLE_API_KEY")
+    # client = genai.Client(api_key="YOUR_GOOGLE_API_KEY")
 
-    response = client.models.generate_content(
-        model="gemini-2.0-flash",
-        contents=QUERY_MESSAGE,
-    )
+    # response = client.models.generate_content(
+    #     model="gemini-2.0-flash",
+    #     contents=QUERY_MESSAGE,
+    # )
+    genai.configure(api_key="YOUR_GOOGLE_API_KEY")
+
+    model = genai.GenerativeModel("gemini-2.0-flash")
+
+    response = model.generate_content(QUERY_MESSAGE)
 
     return response.text
