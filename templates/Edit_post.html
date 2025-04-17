@@ -63,6 +63,10 @@
           display: flex;
           justify-content: center;
         }
+        i{
+          font-size: 20px;
+          font-family: 'Times New Roman', Times, serif;
+        }
         
   </style>
 </head>
@@ -76,52 +80,78 @@
                 </div>
             </nav>
           
-            <!--Card-->
-          <div class="card mt-3 border-3" style="width: 22rem;">
-            <div class="card-body">
-              <h4 class="card-title mt-3" style="text-align: center;"><b>Edit Post</b></h4>
-              <hr>
-                  <!--Body-->
-                  <div class="postimage">
-                    <img src="{% static 'edit_post.svg'%}" height="200" width="300">
-                  </div>
-                  <!--Form-->
-                  <form action="/edit_post/" method="post">
-                    {% csrf_token %}
-                    <input type="hidden" value="{{obj.post_id}}" name="post_id">
-                  <p id="createpost">Title (Max Length = 200)</p>
-                  <div class="input-group">
-                    <input type="text" name="title" class="form-control" value="{{obj.title}}" maxlength="200" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required>
+            <!-- Card -->
+            <div class="card mt-3 border-3" style="width: 90%;">
+              <div class="card-body">
+                <h4 class="card-title mt-3 text-center"><b>Edit Post</b></h4>
+                <hr>
+                <div class="alert alert-info" role="alert">
+                  Our Policy: To keep the community healthy, we accept posts related to job vacancies, seminars or webinars, alumni meets, or event announcements.
+                </div>
+
+                <!-- Body -->
+                <div class="row align-items-center">
+                  <!-- Left -->
+                  <div class="col-md-7">
+                    <div class="form-group">
+                      {% for message in messages %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                          <i class="bi bi-exclamation-triangle"></i>
+                          {{ message }}
+                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                      {% endfor %}
+                    </div>
+                    <!-- Form -->
+                    <form action="/edit_post/" method="post">
+                      {% csrf_token %}
+                      <input type="hidden" value="{{obj.post_id}}" name="post_id">
+
+                      <p id="createpost">Title (Max Length = 200)</p>
+                      <div class="input-group">
+                        <input type="text" name="title" class="form-control" value="{{obj.title}}" maxlength="200" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required>
+                      </div>
+
+                      <p id="createpost">Description (Max Length = 3000)</p>
+                      <div class="input-group">
+                        <textarea class="form-control" name="description" aria-label="With textarea" maxlength="3000" required>{{obj.description}}</textarea>
+                      </div>
+
+                      <p id="createpost">Link 1</p>
+                      <div class="input-group">
+                        <input type="url" name="link1" class="form-control" value="{{obj.link1}}" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                      </div>
+
+                      <p id="createpost">Link 2</p>
+                      <div class="input-group">
+                        <input type="url" name="link2" class="form-control" value="{{obj.link2}}" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                      </div>
+
+                      <p id="createpost">Link 3</p>
+                      <div class="input-group">
+                        <input type="url" name="link3" class="form-control" value="{{obj.link3}}" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                      </div>
+
+                      <div class="modal-footer px-0">
+                        <a href="/my_profile/">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
+                        </a>
+                        <button class="btn" type="submit" id="button">Save Changes</button>
+                      </div>
+                    </form>
                   </div>
 
-                  <p id="createpost">Description (Max Length = 3000)</p>
-                  <div class="input-group">
-                    <textarea class="form-control" name="description" aria-label="With textarea" maxlength="3000" required>{{obj.description}}</textarea>
-                  </div>
-                  
-                  <p id="createpost">Link 1</p>
-                  <div class="input-group">
-                      <input type="url" name="link1" class="form-control" value="{{obj.link1}}" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                  </div>
-
-                  <p id="createpost">Link 2</p>
-                  <div class="input-group">
-                      <input type="url" name="link2" class="form-control" value="{{obj.link2}}" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                  </div>
-
-                  <p id="createpost">Link 3</p>
-                  <div class="input-group">
-                      <input type="url" name="link3" class="form-control" value="{{obj.link3}}" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                  <!-- Right (Image) -->
+                  <div class="col-md-5 text-center">
+                    <div class="postimage">
+                      <img src="{% static 'edit_post.svg' %}" height="200" width="300">
+                    </div>
                   </div>
                 </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
-                  <button class="btn" type="submit" id="button">Save Changes</button>
-                </div>
-              </form>
+              </div>
             </div>
-          </div>
-          <br>
+            <br>
+
           <!-- Footer -->
           <footer class="footer mt-auto py-3 bg-light">
             <div class="container-fl text-center">

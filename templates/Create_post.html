@@ -62,6 +62,10 @@
           display: flex;
           justify-content: center;
         }
+        i{
+          font-size: 20px;
+          font-family: 'Times New Roman', Times, serif;
+        }
         
   </style>
 </head>
@@ -77,51 +81,76 @@
             </nav>
           
             <!--Card-->
-          <div class="card mt-3 border-3" style="width: 22rem;">
-            <div class="card-body">
-              <h4 class="card-title mt-3" style="text-align: center;"><b>Create Post</b></h4>
-              <hr>
-                  <!--Body-->
-                  <div class="postimage">
-                    <img src="{% static 'createpost.svg' %}" height="200" width="300">
-                  </div>
-                  <!--Form-->
-                  <form action="/insert_post/" method="post">
-                    {% csrf_token %}
-                    <input type="hidden" name="posted_on" id="currentDate" value="{{ now }}">
-                  <p id="createpost">Title (Max Length = 200)</p>
-                  <div class="input-group">
-                    <input type="text" class="form-control" aria-label="Sizing example input" maxlength="200" name="title" aria-describedby="inputGroup-sizing-default" required>
+            <div class="card mt-3 border-3 mx-auto" style="width: 90%;">
+              <div class="card-body">
+                <h4 class="card-title text-center mt-3"><b>Create Post</b></h4>
+                <hr>
+                <div class="alert alert-info" role="alert">
+                  Our Policy : To keep the community healthy we accept posts which are related to job vacancies, seminars or webinars, alumni meet or event announcements.
+                </div>
+
+                <!--Body-->
+                <div class="row align-items-center">
+                  <!-- Left Column (Form) -->
+                  <div class="col-md-7">
+                    <div class="form-group">
+                      {% for message in messages %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                          <i class="bi bi-exclamation-triangle"></i>
+                          {{ message }}
+                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                      {% endfor %}
+                    </div>
+
+                    <!--Form-->
+                    <form action="/insert_post/" method="post">
+                      {% csrf_token %}
+                      <input type="hidden" name="posted_on" id="currentDate" value="{{ now }}">
+
+                      <div class="mb-3">
+                        <label class="form-label" for="title">Title (Max Length = 200)</label>
+                        <input type="text" class="form-control" maxlength="200" name="title" required>
+                      </div>
+
+                      <div class="mb-3">
+                        <label class="form-label" for="description">Description (Max Length = 3000)</label>
+                        <textarea class="form-control" maxlength="3000" name="description" rows="5" required></textarea>
+                      </div>
+
+                      <div class="mb-3">
+                        <label class="form-label" for="link1">Link 1</label>
+                        <input type="url" class="form-control" name="link1">
+                      </div>
+
+                      <div class="mb-3">
+                        <label class="form-label" for="link2">Link 2</label>
+                        <input type="url" class="form-control" name="link2">
+                      </div>
+
+                      <div class="mb-3">
+                        <label class="form-label" for="link3">Link 3</label>
+                        <input type="url" class="form-control" name="link3">
+                      </div>
+
+                      <div class="modal-footer px-0">
+                        <a href="/alumni_home/">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
+                        </a>
+                        <button class="btn btn-primary" type="submit" id="button">Post</button>
+                      </div>
+                    </form>
                   </div>
 
-                  <p id="createpost">Description (Max Length = 3000)</p>
-                  <div class="input-group">
-                    <textarea class="form-control" aria-label="With textarea" maxlength="3000" name="description" required></textarea>
-                  </div>
-                  
-                  <p id="createpost">Link 1</p>
-                  <div class="input-group">
-                      <input type="url" class="form-control" aria-label="Recipient's username" name="link1" aria-describedby="basic-addon2">
-                  </div>
-
-                  <p id="createpost">Link 2</p>
-                  <div class="input-group">
-                      <input type="url" class="form-control" aria-label="Recipient's username" name="link2" aria-describedby="basic-addon2">
-                  </div>
-
-                  <p id="createpost">Link 3</p>
-                  <div class="input-group">
-                      <input type="url" class="form-control" aria-label="Recipient's username" name="link3" aria-describedby="basic-addon2">
+                  <!-- Right Column (Image) -->
+                  <div class="col-md-5 text-center">
+                    <img src="{% static 'createpost.svg' %}" class="img-fluid" style="max-height: 300px;" alt="Create Post Illustration">
                   </div>
                 </div>
-                <div class="modal-footer">
-                  <a href="/alumni_home/"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button></a>
-                  <button class="btn" type="submit" id="button">Post</button>
-                </div>
-              </form>
+              </div>
             </div>
-          </div>
-          <br>
+            <br>
+
           <!-- Footer -->
           <footer class="footer mt-auto py-3 bg-light">
             <div class="container-fl text-center">

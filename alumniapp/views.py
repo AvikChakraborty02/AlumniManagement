@@ -4,6 +4,7 @@ from django.shortcuts import render,redirect
 from django.contrib import messages
 from alumniapp.models import OTP,Coordinator,Application,Alumni,Posts,Events
 from django.db.models import Q
+from google import genai
 
 import json
 import os
@@ -789,8 +790,15 @@ def insert_post(request):
                 link1=request.POST['link1']
                 link2=request.POST['link2']
                 link3=request.POST['link3']
-                Posts.objects.create(email=email,posted_on=posted_on,title=title,description=description,link1=link1,link2=link2,link3=link3)
-                return redirect('alumni_home')
+                storage=messages.get_messages(request)
+                storage.used=True
+                response=gemini_call(title,description)
+                if response.strip().lower() == "yes":
+                    Posts.objects.create(email=email,posted_on=posted_on,title=title,description=description,link1=link1,link2=link2,link3=link3)
+                    return redirect('alumni_home')
+                else:
+                    messages.info(request,"Error: We've found that the post you're trying to create is against our policy")
+                    return render(request,"Create_post.html")
             else:
                 return redirect('error_page')
         else:
@@ -809,14 +817,25 @@ def edit_post(request):
                 link1=request.POST['link1']
                 link2=request.POST['link2']
                 link3=request.POST['link3']
-                obj=Posts.objects.get(post_id=post_id)
-                obj.title=title
-                obj.description=description
-                obj.link1=link1
-                obj.link2=link2
-                obj.link3=link3
-                obj.save()
-                return redirect('my_profile')
+                storage=messages.get_messages(request)
+                storage.used=True
+                response=gemini_call(title,description)
+                if response.strip().lower() == "yes":
+                    obj=Posts.objects.get(post_id=post_id)
+                    obj.title=title
+                    obj.description=description
+                    obj.link1=link1
+                    obj.link2=link2
+                    obj.link3=link3
+                    obj.save()
+                    return redirect('my_profile')
+                else:
+                    messages.info(request,"Error: We've found that the post you're trying to create is against our policy")
+                    return redirect('/edit_posts/'+post_id)  
+            else:
+                return redirect('error_page')
+        else:
+            return redirect('error_page')             
     except:
         return redirect('something_went_wrong')
     
@@ -974,3 +993,16 @@ def  my_profile_load_more(request):
     data_list = list(post_obj.values())
     data={'post_obj':data_list}
     return JsonResponse(data=data,safe=False)
+
+# Gemini 2.0 flash API call
+def gemini_call(title,description):
+    PROMPT_MESSAGE="post title and description will be given below. you only have to judge whether the post title and description is for a job vacancy or for a seminar or webinar or for some event announcement or some alumni meet. reply yes if the below post description and title matches the above criteria else reply no. the post description and title is given below:"
+    QUERY_MESSAGE=PROMPT_MESSAGE+"\n"+title+"\n"+description
+    client = genai.Client(api_key="AIzaSyBdDb5ET4wV557aQjDaYntdDAKL1Dunz0w")
+
+    response = client.models.generate_content(
+        model="gemini-2.0-flash",
+        contents=QUERY_MESSAGE,
+    )
+
+    return response.text
