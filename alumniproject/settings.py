@@ -28,8 +28,8 @@ DEBUG = True
 
 # SMTP settings
 EMAIL_HOST='smtp.gmail.com'
-EMAIL_HOST_USER='alumni.coordinator.office@gmail.com'
-EMAIL_HOST_PASSWORD='bvtkesgrmnvjimqf'
+EMAIL_HOST_USER='YOUR_EMAIL_SENDER'
+EMAIL_HOST_PASSWORD='YOUR_KEY_TO_SEND_EMAIL'
 EMAIL_PORT=587
 EMAIL_USE_TLS=True
 EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend' 
