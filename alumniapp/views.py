@@ -974,6 +974,19 @@ def generate_otp():
     otp = str(random.randint(100000, 999999))
     return otp
 
+@sync_to_async
+def get_email_list():
+    return list(Alumni.objects.values_list('email', flat=True))
+
+@sync_to_async
+def send_email(subject, message, recipient):
+    return send_mail(subject, message, 'settings.EMAIL_HOST_USER', [recipient], fail_silently=False)
+
+async def do_email_all(message, title, email=None):  # email param not used here
+    email_list = await get_email_list()
+    for i in email_list:
+        await send_email(title, message, i)
+
 # load more function
 
 def  load_more(request):
