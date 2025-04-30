@@ -6,6 +6,9 @@ from alumniapp.models import OTP,Coordinator,Application,Alumni,Posts,Events
 from django.db.models import Q
 import google.generativeai as genai
 
+from asgiref.sync import sync_to_async
+from asgiref.sync import async_to_sync
+
 import json
 import os
 
