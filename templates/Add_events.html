@@ -59,7 +59,33 @@
           display: flex;
           justify-content: center;
         }
-        
+        #overlay {
+          position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(64, 64, 64, 0.4); /* grey transparent */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            pointer-events: all;
+        }
+
+        .spinner {
+          border: 6px solid #f3f3f3;
+          border-top: 6px solid #555;
+          border-radius: 50%;
+          width: 50px;
+          height: 50px;
+          animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+          to { transform: rotate(360deg); }
+        }
+
   </style>
 </head>
         <body>
@@ -83,7 +109,7 @@
                     <img src="{% static 'Add events.svg' %}" height="200" width="300">
                   </div>
                   <!--Form-->
-                  <form action="/create_event/" method="post" enctype="multipart/form-data">
+                  <form action="/create_event/" method="post" enctype="multipart/form-data" onsubmit="showLoader()">
                     {% csrf_token %}
                     <input type="hidden" name="posted_on" id="currentDate" value="{{ now }}"> 
 
@@ -106,6 +132,20 @@
             </div>
           </div>
           <br>
+          <!-- Spinner Overlay -->
+
+          <div id="overlay" style="display: none;">
+            <div class="card" style="background-color: white; border-radius: 2%;">
+              <br>
+              <div class="spinner-border text-primary"></div>
+
+            <p class="mt-3 px-4" style="max-width: 300px; color: black;">
+              Please wait while we're mailing all the alumni. This may take some time.
+              <strong>Do not reload or click any button.</strong>
+            </p>
+
+            </div>
+          </div>
           <!-- Footer -->
           <footer class="footer mt-auto py-3 bg-light">
             <div class="container-fl text-center">
@@ -153,6 +193,9 @@
             }
         }
     });
+          function showLoader() {
+            document.getElementById('overlay').style.display = 'flex';
+          }
         </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     </body>
