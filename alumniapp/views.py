@@ -752,11 +752,14 @@ def create_event(request):
             posted_on=request.POST['posted_on']
             description=request.POST['description'] 
             poster=request.FILES['poster']
-            is_new=request.POST['is_new']
+            is_new=request.POST.get('is_new','no')
             Events.objects.create(posted_on=posted_on,description=description,event=poster,is_new=is_new)
+            title="New Event Alert! " + description
+            message="Dear Alumni,\n\nThere is a New Event at your Institution. Posted On: "+posted_on+ "\n\nKindly visit our website and check it out!!\n\nLink: https://alumni24.pythonanywhere.com/ \n\nThanks and Regards,\nAlumni Coordinator of RCCIIT"
+            async_to_sync(do_email_all)(message,title)
             return redirect('admin_news')
     except:
-        return redirect('something_went_wrong') 
+        return redirect('something_went_wrong')
 
 #REST APIs (Alumni Only)
 
