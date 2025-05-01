@@ -80,6 +80,10 @@
         .card{
             background-color: #F5F5DC;
         }
+        i{
+          font-size: 20px;
+          font-family: 'Times New Roman', Times, serif;
+        }
     </style>
 </head>
 
@@ -160,9 +164,6 @@
                         <div class="input-group mb-1 mt-1">
                             <input type="password" value="{{obj.password}}" class="form-control" aria-label="Recipient's username" id="password"
                                 aria-describedby="basic-addon2" readonly onchange="checkPassword()">
-                                <button id="visibility-toggle">
-                                    <i class="bi bi-eye"></i>  
-                                </button>
                         </div>
                         <p id="error" style="color: red; font-size: 14px;"></p>
                         
