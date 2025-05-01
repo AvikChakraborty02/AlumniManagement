@@ -361,9 +361,11 @@
             // Validate file size and format
             if (fileExtension !== 'jpg' && fileExtension !== 'jpeg') {
               alert('Only .jpg or .jpeg formats are allowed.');
+              this.value = '';
               return;
             } else if (fileSizeInMB > 1) {
               alert('File size must be less than 1 MB.');
+              this.value = '';
               return;
             }
     
@@ -391,8 +393,12 @@
     
             if (fileExtension !== 'jpg' && fileExtension !== 'jpeg') {
               alert('Only .jpg or .jpeg formats are allowed.');
+              this.value = '';
+              return;
             } else if (fileSizeInMB > 1) {
               alert('File size must be less than 1 MB.');
+              this.value = '';
+              return;
             } else {
               alert('File is valid for upload!');
               // Proceed with form submission or AJAX request here
