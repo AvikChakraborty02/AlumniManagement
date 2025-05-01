@@ -335,7 +335,7 @@
           <div class="load-more-button">
             <button type="submit" class="btn" id="load-more-button" style="background-color:rgb(52, 8, 5) ; color: white; display: inline-flex; align-items: center; font-size: 16px;">Load More...</button>
           </div>
-          <div class="alert alert-danger mt-2 not-visible mb-2" role="alert" id='alert' style="text-align: center; width: 90%; margin-left: 5%;">
+          <div class="alert alert-danger mt-2 not-visible mb-2" role="alert" id='alert_btn' style="text-align: center; width: 90%; margin-left: 5%;">
             No more post to load!!
           </div>
           {{totalpost_obj|json_script:"json-total"}}
@@ -407,7 +407,7 @@
           // console.log(_current_item);
           const loadBtn = document.getElementById('load-more-button');
           const total = JSON.parse(document.getElementById('json-total').textContent);
-          const alert = document.getElementById('alert');
+          const alert_btn = document.getElementById('alert_btn');
 
           function loadmorePost() {
               var _current_item = $('.post').length
@@ -456,7 +456,7 @@
           </div>`
                       })
                       if (_current_item == total) {
-                          alert.classList.remove('not-visible');
+                          alert_btn.classList.remove('not-visible');
                       } else {
                           loadBtn.classList.remove('not-visible');
                       }
