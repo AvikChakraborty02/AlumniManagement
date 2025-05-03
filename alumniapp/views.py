@@ -1016,7 +1016,7 @@ def  my_profile_load_more(request):
 # Gemini 2.0 flash API call
 def gemini_call(title,description):
     PROMPT_MESSAGE="post title and description will be given below. you only have to judge whether the post title and description is for a job vacancy or for a seminar or webinar or for some event announcement or some alumni meet. also check that the title and description must have a valid meaning and is in context with the job vacancy , seminar or webinar. reply yes if the below post description and title matches the above criteria else reply no. the post description and title is given below:"
-    QUERY_MESSAGE=PROMPT_MESSAGE+"\nThe post title is:"+title+"\nThe post description is:"+description
+    QUERY_MESSAGE=PROMPT_MESSAGE+"\ntitle:"+title+"\ndescription:"+description
     # client = genai.Client(api_key="YOUR_GOOGLE_API_KEY")
 
     # response = client.models.generate_content(
