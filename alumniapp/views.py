@@ -6,11 +6,9 @@ from alumniapp.models import OTP,Coordinator,Application,Alumni,Posts,Events
 from django.db.models import Q
 import google.generativeai as genai
 
-from asgiref.sync import sync_to_async
-from asgiref.sync import async_to_sync
-
 import json
 import os
+import threading
 
 import random
 from django.core.mail import send_mail
@@ -759,7 +757,7 @@ def create_event(request):
             Events.objects.create(posted_on=posted_on,description=description,event=poster,is_new=is_new)
             title="New Event Alert! " + description
             message="Dear Alumni,\n\nThere is a New Event at your Institution. Posted On: "+posted_on+ "\n\nKindly visit our website and check it out!!\n\nLink: https://alumni24.pythonanywhere.com/ \n\nThanks and Regards,\nAlumni Coordinator of RCCIIT"
-            async_to_sync(do_email_all)(message,title)
+            threading.Thread(target=do_email_all,args=(message,title)).start()
             return redirect('admin_news')
     except:
         return redirect('something_went_wrong')
@@ -970,22 +968,19 @@ def alumni_search_people(request):
 def do_email(message,title,email):
     send_mail(title,message,'settings.EMAIL_HOST_USER',[email],fail_silently=False)
 
-def generate_otp():
-    otp = str(random.randint(100000, 999999))
-    return otp
-
-@sync_to_async
 def get_email_list():
     return list(Alumni.objects.values_list('email', flat=True))
 
-@sync_to_async
 def send_email(subject, message, recipient):
     return send_mail(subject, message, 'settings.EMAIL_HOST_USER', [recipient], fail_silently=False)
 
-async def do_email_all(message, title, email=None):  # email param not used here
-    email_list = await get_email_list()
+def do_email_all(message, title, email=None):
+    #print('Thread started!')  # email param not used here
+    email_list = get_email_list()
+    #print (f"sending to {email_list}")
     for i in email_list:
-        await send_email(title, message, i)
+        send_email(title, message, i)
+        #print(f"send to {i}")
 
 # load more function
 
