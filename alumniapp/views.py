@@ -982,6 +982,10 @@ def do_email_all(message, title, email=None):
         send_email(title, message, i)
         #print(f"send to {i}")
 
+def generate_otp():
+    otp = str(random.randint(100000, 999999))
+    return otp
+
 # load more function
 
 def  load_more(request):
