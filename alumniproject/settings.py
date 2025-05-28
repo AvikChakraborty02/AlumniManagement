@@ -119,8 +119,8 @@ USE_I18N = True
 
 USE_TZ = True
 
-RAZOR_KEY_ID = 'rzp_test_sHwYjruo4MsYSN'
-RAZOR_KEY_SECRET = 'WbE7F6UD8Ybz34wrPq00BSlK'
+RAZOR_KEY_ID = YOUR KEY ID
+RAZOR_KEY_SECRET = YOUR KEY SECRET
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
