@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Payment</title>
+    {% load static %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+
+    <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Nunito:600,700" rel="stylesheet"> 
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
+    <style>
+        body {
+            font-family: 'Nunito',sans-serif;
+        }
+        p {
+            font-size: 16px;
+        }
+        i{
+            font-family: 'Times New Roman', Times, serif;
+        }
+        nav {
+            background-color: rgb(52, 8, 5);
+            position: -webkit-sticky;
+            position: sticky;
+            z-index: 9999;
+            top: 0;
+        }
+
+        .nav-item:hover {
+            position: relative;
+            transform: scale(1.1);
+            transition: 0.6s;
+        }
+        .card{
+            display: flex;
+            justify-content: center;
+            margin: auto;
+            margin-top: 3%;
+        }
+        
+        /* .image{
+            height: fit-content;
+            width: fit-content;
+        } */
+        .card-body {
+            background-color: #F5F5DC;
+        }
+        #button{
+            background-color:rgb(52, 8, 5) ;
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            font-size: 16px;
+        }
+    </style>
+  </head>
+  <body>
+    
+    <!--nav bar start -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <img src="{% static 'logo3.png' %}" alt="" width="50" height="50" class="d-inline-block align-text-center">
+            <strong style="text-wrap: balance;">RCC Institute of Information Technology</strong></a>
+        <div class="changepassword">
+            <a href="/alumni_home/"><button type="button" class="btn btn-outline-light" id="button">Back <i class="bi bi-box-arrow-left" style="margin-left:4px ; margin-right: 0;"></i></button></a>
+        </div>
+        </div>
+    </nav>
+
+    <!--Donate Card-->
+    <div class="card border-3" style="width: 90%;">
+        <div class="container">
+            <div class="row align-items-start">
+                <div class="col-sm-6 col-md-12 col-lg-6" style="margin-top: 2%;">
+                    <h2>Donate for your Institution!</h2>
+                    <p>As a proud member of our alumni community, you carry the legacy of an institution that shaped your journey. Now, you have the chance to give back and support its continued growth. Your contribution—big or small—can create meaningful opportunities for current and future students. Join us in building a stronger, brighter future and keeping the spirit of learning and leadership alive.</p>
+                    <br>
+                    <b>"Give Back, Shape the Future — Your Support Fuels the Next Generation of Excellence."</b>
+                    <br><br>
+                    <form class="form-floating mb-3" action="/get_amount/" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="email" value="{{email}}">
+                        <input type="text" class="form-control" id="floatingInputValue" placeholder="name@example.com" autocomplete="off" name="price" required>
+                        <label for="floatingInputValue">Enter your amount</label>
+                    <button class="btn btn-success btn-lg mb-3 mt-3" id="pay-btn" style="float: right;">Proceed To Payment</button>
+                    </form>
+                </div>
+                <div class="col-sm-6 col-md-12 col-lg-6 d-flex justify-content-center align-self-center">
+                    <img src="{% static 'donate.svg' %}" alt="Payment Image" class="img-fluid" style="max-height: 300px;">
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <!-- Footer -->
+  <footer class="footer mt-auto py-3 bg-light">
+    <div class="container-fl text-center">
+      <span class="text">&copy; 2024 by RCC Institute of Information Technology | All Rights Reserved.</span>
+    </div>
+  </footer>
+
+    <script>
+        const priceInput = document.getElementById('floatingInputValue');
+
+        priceInput.addEventListener('input', function () {
+            // Remove all non-digit characters
+            this.value = this.value.replace(/\D/g, '');
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
+  </body>
+</html>
