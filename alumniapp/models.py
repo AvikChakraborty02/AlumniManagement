@@ -95,3 +95,12 @@ class Events(models.Model):
     is_new=models.CharField(max_length=3)
     event=models.FileField(null=True,blank=False,upload_to='events/',validators=[validate_pdf])
 
+class Transactions(models.Model):
+    id=models.BigAutoField(primary_key=True)
+    email=models.EmailField()
+    order_id=models.CharField(max_length=3000)
+    payment_id=models.CharField(max_length=3000)
+    created_at = models.DateTimeField(auto_now_add=True)
+    amount=models.BigIntegerField()
+    status=models.CharField(max_length=10,default='Failure')
+
