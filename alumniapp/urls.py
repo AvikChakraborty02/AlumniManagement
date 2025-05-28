@@ -98,4 +98,9 @@ urlpatterns = [
     #Load More URL
     path("load/",views.load_more,name="load"),
     path("my_profile_load_more",views.my_profile_load_more,name="my_profile_load_more"),
+
+    #Donate and Payment URL
+    path("donate/",views.donate,name="donate"),
+    path('paymenthandler/', views.paymenthandler, name='paymenthandler'),
+    path('get_amount/',views.get_amount,name="get_amount"),
 ]   
