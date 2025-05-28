@@ -2,18 +2,21 @@ from datetime import datetime
 from django.http import JsonResponse
 from django.shortcuts import render,redirect
 from django.contrib import messages
-from alumniapp.models import OTP,Coordinator,Application,Alumni,Posts,Events
+from alumniapp.models import OTP,Coordinator,Application,Alumni,Posts,Events,Transactions
 from django.db.models import Q
 import google.generativeai as genai
 
 import json
 import os
 import threading
+import razorpay
 
 import random
 from django.core.mail import send_mail
 from django.conf import settings
 from django.core.paginator import Paginator
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponseBadRequest
 
 # Create your views here.
 
