@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Payment Failed</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .failure-box {
+      max-width: 400px;
+      margin: auto;
+      background: #fff;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .failure-icon {
+      width: 80px;
+      height: 80px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="failure-box">
+      <img src="https://cdn-icons-png.flaticon.com/512/753/753345.png" alt="Failure" class="failure-icon mb-4">
+      <h2 class="text-danger fw-bold">Payment Failed!</h2>
+      <p class="text-muted">Something went wrong with your transaction. Please try again.</p>
+      <a href="/" class="btn btn-danger mt-3">Back to Home</a>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
