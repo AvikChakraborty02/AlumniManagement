@@ -1029,3 +1029,97 @@ def gemini_call(title,description):
     response = model.generate_content(QUERY_MESSAGE)
 
     return response.text
+
+#Donate and Payment
+def donate(request): 
+    email=request.session.get('email')
+    if ('email') in request.session and Alumni.objects.filter(email=email).exists():
+        return render(request,'donatepage.html',{'email':email})
+    else:
+        return redirect('error_page')
+    
+razorpay_client = razorpay.Client(auth=(settings.RAZOR_KEY_ID, settings.RAZOR_KEY_SECRET))
+
+def get_amount(request):
+    if request.method=='POST':
+        currency = 'INR'
+        price = request.POST.get('price') # Rs. 200
+        amount=int(price)*100
+
+        email=request.POST.get('email')
+        
+        # Create a Razorpay Order
+        razorpay_order = razorpay_client.order.create(dict(amount=amount,currency=currency,payment_capture='0'))
+
+        # order id of newly created order.
+        razorpay_order_id = razorpay_order['id']
+        # callback_url = 'paymenthandler/'+str(amount)+'/'
+        callback_url = request.build_absolute_uri('/paymenthandler/')
+
+        Transactions.objects.create(email=email,order_id=razorpay_order_id,amount=int(price))
+        # we need to pass these details to frontend.
+        context = {}
+        context['razorpay_order_id'] = razorpay_order_id
+        context['razorpay_merchant_key'] = settings.RAZOR_KEY_ID
+        context['razorpay_amount'] = amount
+        context['currency'] = currency
+        context['callback_url'] = callback_url
+        return render(request,'razorpay.html',context=context)
+    else:
+        return HttpResponseBadRequest()
+
+# we need to csrf_exempt this url as
+# POST request will be made by Razorpay
+# and it won't have the csrf token.
+@csrf_exempt
+def paymenthandler(request):
+    # only accept POST request.
+    if request.method == "POST":
+        try:
+          
+            # get the required parameters from post request.
+            payment_id = request.POST.get('razorpay_payment_id', '')
+            razorpay_order_id = request.POST.get('razorpay_order_id', '')
+            signature = request.POST.get('razorpay_signature', '')
+            amount=request.POST.get('razorpay_amount','')
+            params_dict = {
+                'razorpay_order_id': razorpay_order_id,
+                'razorpay_payment_id': payment_id,
+                'razorpay_signature': signature
+            }
+
+            obj=Transactions.objects.get(order_id=razorpay_order_id)
+            # verify the payment signature.
+            result = razorpay_client.utility.verify_payment_signature(
+                params_dict)
+            if result is not None:
+                #amount = 20000  # Rs. 200
+                try:
+                    # Fetch order to get amount securely
+                    order = razorpay_client.order.fetch(razorpay_order_id)
+                    amount = order['amount']  # Amount in paise
+                    # capture the payment
+                    razorpay_client.payment.capture(payment_id,int(amount))
+                    obj.status='Success'
+                    obj.payment_id=payment_id
+                    obj.save()
+                    # render success page on successful caputre of payment
+                    return render(request, 'paymentsuccess.html')
+                except:
+                    # if there is an error while capturing payment.
+                    obj.status='Failure'
+                    obj.payment_id=payment_id
+                    obj.save()
+                    return render(request, 'paymentfail.html')
+            else:
+                # if signature verification fails.
+                obj.status='Failure'
+                obj.payment_id=payment_id
+                obj.save()
+                return render(request, 'paymentfail.html')
+        except:
+            # if we don't find the required parameters in POST data
+            return render(request, 'paymentfail.html')
+    else:
+       # if other than POST request is made.
+        return HttpResponseBadRequest()
