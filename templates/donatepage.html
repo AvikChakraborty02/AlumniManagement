@@ -108,8 +108,20 @@
         const priceInput = document.getElementById('floatingInputValue');
 
         priceInput.addEventListener('input', function () {
-            // Remove all non-digit characters
+            // Remove non-digit characters
             this.value = this.value.replace(/\D/g, '');
+
+            // Parse value to integer
+            const amount = parseInt(this.value, 10);
+
+            // Validate range
+            if (amount < 10 && this.value !== '') {
+                this.setCustomValidity("Minimum donation amount is ₹10.");
+            } else if (amount > 100000) {
+                this.setCustomValidity("Maximum donation amount is ₹1,00,000.");
+            } else {
+                this.setCustomValidity("");
+            }
         });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
