@@ -1130,7 +1130,7 @@ def paymenthandler(request):
 def my_donations(request):
     email=request.session.get('email')
     if ('email') in request.session and Alumni.objects.filter(email=email).exists():
-        data=Transactions.objects.filter(email=email)
+        data=Transactions.objects.filter(email=email).order_by('-created_at')
         return render(request,'transactions.html',{'data':data})
     else:
         return redirect('error_page')
@@ -1143,10 +1143,10 @@ def filter_donations(request):
             if status=="All":
                 return redirect('/my_donations/')
             elif status=='Success':
-                data=Transactions.objects.filter(email=email,status="Success")
+                data=Transactions.objects.filter(email=email,status="Success").order_by('-created_at')
                 return render(request,'transactions.html',{'data':data})
             elif status=='Failure':
-                data=Transactions.objects.filter(email=email,status="Failure")
+                data=Transactions.objects.filter(email=email,status="Failure").order_by('-created_at')
                 return render(request,'transactions.html',{'data':data})
             else:
                 return redirect('error_page')
