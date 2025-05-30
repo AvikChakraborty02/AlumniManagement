@@ -103,4 +103,6 @@ urlpatterns = [
     path("donate/",views.donate,name="donate"),
     path('paymenthandler/', views.paymenthandler, name='paymenthandler'),
     path('get_amount/',views.get_amount,name="get_amount"),
+    path('my_donations/',views.my_donations,name="my_donations"),
+    path('filter_donations/',views.filter_donations,name="filter_donations"),
 ]   
