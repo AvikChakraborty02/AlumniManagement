@@ -1126,3 +1126,31 @@ def paymenthandler(request):
     else:
        # if other than POST request is made.
         return HttpResponseBadRequest()
+
+def my_donations(request):
+    email=request.session.get('email')
+    if ('email') in request.session and Alumni.objects.filter(email=email).exists():
+        data=Transactions.objects.filter(email=email)
+        return render(request,'transactions.html',{'data':data})
+    else:
+        return redirect('error_page')
+
+def filter_donations(request):
+    email=request.session.get('email')
+    if ('email') in request.session and Alumni.objects.filter(email=email).exists():
+        if request.method=='POST':
+            status=request.POST['status']
+            if status=="All":
+                return redirect('/my_donations/')
+            elif status=='Success':
+                data=Transactions.objects.filter(email=email,status="Success")
+                return render(request,'transactions.html',{'data':data})
+            elif status=='Failure':
+                data=Transactions.objects.filter(email=email,status="Failure")
+                return render(request,'transactions.html',{'data':data})
+            else:
+                return redirect('error_page')
+        else:
+            return redirect('something_went_wrong')
+    else:
+        return redirect('error_page')
