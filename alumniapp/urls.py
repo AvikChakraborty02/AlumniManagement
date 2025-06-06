@@ -105,4 +105,6 @@ urlpatterns = [
     path('get_amount/',views.get_amount,name="get_amount"),
     path('my_donations/',views.my_donations,name="my_donations"),
     path('filter_donations/',views.filter_donations,name="filter_donations"),
+    path('admin_donations/',views.admin_donations,name="admin_donations"),
+    path('search_donations/',views.search_donations,name="search_donations"),
 ]   
