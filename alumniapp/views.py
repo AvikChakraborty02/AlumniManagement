@@ -1159,7 +1159,7 @@ def admin_donations(request):
     email=request.session.get('email')
     if ('email') in request.session and Coordinator.objects.filter(email=email).exists():
         allData=Transactions.objects.all().order_by('-created_at')
-        paginator=Paginator(allData,1)
+        paginator=Paginator(allData,100)
         page_number=request.GET.get('page',1)
         allDataFinal=paginator.get_page(page_number)
         totalpagenumber=allDataFinal.paginator.num_pages 
