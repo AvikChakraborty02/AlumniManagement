@@ -1154,3 +1154,96 @@ def filter_donations(request):
             return redirect('something_went_wrong')
     else:
         return redirect('error_page')
+
+def admin_donations(request):
+    email=request.session.get('email')
+    if ('email') in request.session and Coordinator.objects.filter(email=email).exists():
+        allData=Transactions.objects.all().order_by('-created_at')
+        paginator=Paginator(allData,1)
+        page_number=request.GET.get('page',1)
+        allDataFinal=paginator.get_page(page_number)
+        totalpagenumber=allDataFinal.paginator.num_pages 
+        if (int(page_number)<1 or int(page_number)>totalpagenumber):
+            return redirect('error_page')
+        else:
+            start_index = max(int(page_number) - 1, 1)
+            end_index = min(start_index + 2, paginator.num_pages) 
+            data={'allDataFinal':allDataFinal,'lastpage':totalpagenumber,'totalPageList':list(range(start_index, end_index + 1)),'currentpage':int(page_number),'has_previous': int(page_number) > 1,'has_next': int(page_number) < paginator.num_pages,}
+            return render(request,'Admin_donations.html',data)
+    else:
+        return redirect('error_page')
+    
+
+def search_donations(request):
+    if request.method=='POST':
+        search_by=request.POST['search_by']
+        search=request.POST['search']
+        status=request.POST['status']
+        storage=messages.get_messages(request)
+        storage.used=True
+        if status:
+            #search by all
+            if(search_by=='all' and status=='Success'):
+                allData=Transactions.objects.filter(Q(status='Success')).order_by('-created_at')
+            elif(search_by=='all' and status=='Failure'):
+                allData=Transactions.objects.filter(Q(status='Failure')).order_by('-created_at')
+            elif(search_by=='all' and status=='All'):
+                return redirect('admin_donations') 
+            #search by order_id
+            if(search_by=='order_id' and status=='Success'):
+                allData=Transactions.objects.filter(Q(status='Success') & Q(order_id__contains=search)).order_by('-created_at')
+            elif(search_by=='order_id' and status=='Failure'):
+                allData=Transactions.objects.filter(Q(status='Failure') & Q(order_id__contains=search)).order_by('-created_at')
+            elif(search_by=='order_id' and status=='All'):
+                allData=Transactions.objects.filter(Q(order_id__contains=search)).order_by('-created_at')
+            #search by payment_id
+            if(search_by=='payment_id' and status=='Success'):
+                allData=Transactions.objects.filter(Q(status='Success') & Q(payment_id__contains=search)).order_by('-created_at')
+            elif(search_by=='payment_id' and status=='Failure'):
+                allData=Transactions.objects.filter(Q(status='Failure') & Q(payment_id__contains=search)).order_by('-created_at')
+            elif(search_by=='payment_id' and status=='All'):
+                allData=Transactions.objects.filter(Q(payment_id__contains=search)).order_by('-created_at')
+            #search by email
+            if(search_by=='email' and status=='Success'):
+                allData=Transactions.objects.filter(Q(status='Success') & Q(email__contains=search)).order_by('-created_at')
+            elif(search_by=='email' and status=='Failure'):
+                allData=Transactions.objects.filter(Q(status='Failure') & Q(email__contains=search)).order_by('-created_at')
+            elif(search_by=='email' and status=='All'):
+                allData=Transactions.objects.filter(Q(email__contains=search)).order_by('-created_at')
+        else:
+            #search by all
+            if(search_by=='all'):
+                allData=Transactions.objects.filter(Q(status='Success')).order_by('-created_at')
+            elif(search_by=='all'):
+                allData=Transactions.objects.filter(Q(status='Failure')).order_by('-created_at')
+            elif(search_by=='all'):
+                return redirect('admin_donations') 
+            #search by order_id
+            if(search_by=='order_id'):
+                allData=Transactions.objects.filter(Q(order_id__contains=search)).order_by('-created_at')
+            elif(search_by=='order_id'):
+                allData=Transactions.objects.filter(Q(order_id__contains=search)).order_by('-created_at')
+            elif(search_by=='order_id'):
+                allData=Transactions.objects.filter(Q(order_id__contains=search)).order_by('-created_at')
+            #search by payment_id
+            if(search_by=='payment_id'):
+                allData=Transactions.objects.filter(Q(payment_id__contains=search)).order_by('-created_at')
+            elif(search_by=='payment_id'):
+                allData=Transactions.objects.filter(Q(payment_id__contains=search)).order_by('-created_at')
+            elif(search_by=='payment_id'):
+                allData=Transactions.objects.filter(Q(payment_id__contains=search)).order_by('-created_at')
+            #search by email
+            if(search_by=='email'):
+                allData=Transactions.objects.filter(Q(email__contains=search)).order_by('-created_at')
+            elif(search_by=='email'):
+                allData=Transactions.objects.filter(Q(email__contains=search)).order_by('-created_at')
+            elif(search_by=='email'):
+                allData=Transactions.objects.filter(Q(email__contains=search)).order_by('-created_at')  
+        if(allData.count()>0):
+            data={'allDataFinal':allData,'match_count':len(allData)}
+            return render(request,'Admin_donations_value.html',data)
+        else:
+            messages.info(request,"No records found")
+            return redirect('admin_donations')
+    else:
+        return redirect('error_page')
