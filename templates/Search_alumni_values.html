@@ -22,6 +22,9 @@
         p{
             font-size: 16px;
         }
+        i{
+          font-family: 'Times New Roman', Times, serif;
+        }
         nav#nav{
             background-color: rgb(52, 8, 5);
             position: -webkit-sticky;
@@ -56,12 +59,6 @@
             display: inline-flex;
             align-items: center;
             font-size: 16px;
-        }
-        #button i{
-            margin-right: 4px;
-            line-height: 1;  /* Ensures the icon aligns with the text */
-            vertical-align: middle;
-            padding-bottom: 1%;
         }
         .offcanvas{
             z-index: 10000;
@@ -236,29 +233,30 @@
 
      <h5 style="text-align: center;">Match Found:&nbsp;{{match_count}}</h5>     
 
-    <div class="content">
-        <div class="search d-flex justify-content-center mt-1">
-            <div class="dropdown">
-                <form action="/search_details/" method="post">
-                {% csrf_token %}
-                <select id="search_by" name="search_by" style="padding: 6%;color: gray;border: none;margin-top: 4%;" required>
-                    <option value="">Search By</option>
-                    <option value="name">Name</option>
-                    <option value="course">Course</option>
-                    <option value="passing year">Passing Year</option>
-                    <option value="alumni id">Alumni Id</option>
-                    <option value="email">Email</option>
-                    <option value="organization">Organization</option>
-                    <option value="job role">Job Role</option>
-                    <option value="all">All</option>
-                </select>
-            </div>&nbsp;&nbsp;&nbsp;
-                <input class="form-control me-2" style="width: 50%;margin-left: 1%;" type="search" placeholder="Search" name="search" aria-label="Search">
-                <button class="btn" id="button" type="submit"><i class="bi bi-search"></i></button>
-                <!--PDF Button-->
-                <button class="btn btn-sm btn-block d-sm-inline d-block mx-2" id="button" onclick="generatePDF()">Download as PDF</button>
-
-        </form>
+    <div class="content mt-3" style="margin-bottom: 2%;">
+        <!-- <div class="search d-flex justify-content-center mt-1"> -->
+            <form class="d-flex align-items-end flex-wrap gap-2 justify-content-center" action="/search_details/" method="post">
+            {% csrf_token %}
+                <div>
+                    <select id="search_by" name="search_by" class="form-select" required>
+                        <option value="">Search By</option>
+                        <option value="name">Name</option>
+                        <option value="course">Course</option>
+                        <option value="passing year">Passing Year</option>
+                        <option value="alumni id">Alumni Id</option>
+                        <option value="email">Email</option>
+                        <option value="organization">Organization</option>
+                        <option value="job role">Job Role</option>
+                        <option value="all">All</option>
+                    </select>
+                </div>
+                <div><input class="form-control" type="search" placeholder="Search" name="search" aria-label="Search"></div>
+                <div>
+                    <button class="btn" id="button" type="submit"><i class="bi bi-search"></i></button>
+                    <!--PDF Button-->
+                    <button class="btn float-end mx-2" id="button" onclick="generatePDF()">Download as PDF</button>
+                </div>
+            </form>
     </div>
     
     <br>
