@@ -251,7 +251,16 @@
         </form>
       </div>
 
-
+    <!--Record Cards-->
+      <div class="card border-0">
+        <div class="row d-flex justify-content-center text-center">
+          <div class="col-sm-3"><p style="color: rgb(52, 8, 5);"><b>Total no. of Transactions : </b></p> <p class="count" data-target="{{no_donations}}" style="color: #e67300; font-size: 25px;"><b>0</b></p></div>
+          <div class="col-sm-3"><p style="color: rgb(52, 8, 5);"><b>Total amount collected : </b></p><p class="count text-primary" data-target="{{no_amount}}" style="font-size: 25px;"><b>0</b></p></div>
+          <div class="col-sm-3"><p style="color: rgb(52, 8, 5);"><b>No. of Successful Transactions :</b></p><p class="count text-success" data-target="{{no_success}}" style="font-size: 25px;"><b>0</b></p></div>
+          <div class="col-sm-3"><p style="color: rgb(52, 8, 5);"><b>No. of Failed Transactions :</b></p><p class="count text-danger" data-target="{{no_failure}}" style="font-size: 25px;"><b>0</b></p></div>
+        </div>
+      </div>
+    <!--Table Cards-->    
     <div class="card table-card p-4">
       <div class="table-responsive">
         <table class="table table-striped table-hover">
