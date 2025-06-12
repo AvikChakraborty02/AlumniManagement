@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.shortcuts import render,redirect
 from django.contrib import messages
 from alumniapp.models import OTP,Coordinator,Application,Alumni,Posts,Events,Transactions
-from django.db.models import Q
+from django.db.models import Q,Sum
 import google.generativeai as genai
 
 import json
@@ -1163,12 +1163,17 @@ def admin_donations(request):
         page_number=request.GET.get('page',1)
         allDataFinal=paginator.get_page(page_number)
         totalpagenumber=allDataFinal.paginator.num_pages 
+        #countable data
+        no_donations=Transactions.objects.all().count()
+        no_success=Transactions.objects.filter(status="Success").count()
+        no_failure=Transactions.objects.filter(status="Failure").count()
+        no_amount=Transactions.objects.filter(status="Success").aggregate(Sum('amount'))['amount__sum'] or 0
         if (int(page_number)<1 or int(page_number)>totalpagenumber):
             return redirect('error_page')
         else:
             start_index = max(int(page_number) - 1, 1)
             end_index = min(start_index + 2, paginator.num_pages) 
-            data={'allDataFinal':allDataFinal,'lastpage':totalpagenumber,'totalPageList':list(range(start_index, end_index + 1)),'currentpage':int(page_number),'has_previous': int(page_number) > 1,'has_next': int(page_number) < paginator.num_pages,}
+            data={'allDataFinal':allDataFinal,'lastpage':totalpagenumber,'totalPageList':list(range(start_index, end_index + 1)),'currentpage':int(page_number),'has_previous': int(page_number) > 1,'has_next': int(page_number) < paginator.num_pages,'no_donations':no_donations,'no_success':no_success,'no_failure':no_failure,'no_amount':no_amount}
             return render(request,'Admin_donations.html',data)
     else:
         return redirect('error_page')
