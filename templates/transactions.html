@@ -173,7 +173,7 @@
           <tbody>
             {% for i in data %}
             <tr>
-              <th scope="row">{{i.id}}</th>
+              <th scope="row">{{forloop.counter}}</th>
               <td>{{i.order_id}}</td>
               <td>{{i.payment_id}}</td>
               <td>{{i.created_at}}</td>
