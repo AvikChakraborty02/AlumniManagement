@@ -354,6 +354,28 @@
                 content.style.top = '0';
             }, 5000);
         });
+
+        //Record counter animation
+
+      const counters = document.querySelectorAll('.count');
+
+      counters.forEach(counter => {
+        const updateCount = () => {
+          const target = +counter.getAttribute('data-target');
+          const count = +counter.innerText;
+
+          const increment = target / 200; // speed factor
+
+          if (count < target) {
+            counter.innerText = Math.ceil(count + increment);
+            setTimeout(updateCount, 10); // update every 10ms
+          } else {
+            counter.innerText = target.toLocaleString(); // adds commas
+          }
+        };
+
+        updateCount();
+      });
       </script>
 
     
