@@ -276,7 +276,7 @@
           <tbody>
             {% for i in allDataFinal %}
             <tr>
-              <th scope="row">{{i.id}}</th>
+              <th scope="row">{{forloop.counter}}</th>
               <td>{{i.order_id}}</td>
               <td>{{i.payment_id}}</td>
               <td>{{i.email}}</td>
@@ -335,7 +335,7 @@
         <tbody>
             {% for i in allDataFinal %}
             <tr>
-                <td style="padding: 10px; border: 1px solid #ccc;">{{ i.id }}</td>
+                <td style="padding: 10px; border: 1px solid #ccc;">{{forloop.counter}}</td>
                 <td style="padding: 10px; border: 1px solid #ccc;">{{ i.order_id }}</td>
                 <td style="padding: 10px; border: 1px solid #ccc;">{{ i.payment_id }}</td>
                 <td style="padding: 10px; border: 1px solid #ccc;">{{ i.email }}</td>
